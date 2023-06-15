@@ -1,3 +1,4 @@
+import 'package:agos/screens/pages/history_screen.dart';
 import 'package:agos/screens/tabs/station_list_tab.dart';
 import 'package:agos/utils/colors.dart';
 import 'package:agos/widgets/drawer_widget.dart';
@@ -128,7 +129,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           width: 10,
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const HistoryScreen()));
+                          },
                           icon: const Icon(
                             Icons.my_library_books_outlined,
                             color: primary,

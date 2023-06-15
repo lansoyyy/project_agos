@@ -146,7 +146,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                             children: [
                               const Icon(
                                 Icons.phone,
-                                color: Colors.grey,
+                                color: primary,
                                 size: 15,
                               ),
                               const SizedBox(
@@ -257,7 +257,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                                     },
                                     child: const Icon(
                                       Icons.edit_outlined,
-                                      color: Colors.black,
+                                      color: primary,
                                       size: 16,
                                     ),
                                   ),
@@ -273,7 +273,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                             children: [
                               const Icon(
                                 Icons.email,
-                                color: Colors.grey,
+                                color: primary,
                                 size: 15,
                               ),
                               const SizedBox(
