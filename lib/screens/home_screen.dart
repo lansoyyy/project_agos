@@ -1,5 +1,6 @@
 import 'package:agos/screens/tabs/station_list_tab.dart';
 import 'package:agos/utils/colors.dart';
+import 'package:agos/widgets/drawer_widget.dart';
 import 'package:agos/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
       length: 3,
       child: Scaffold(
         drawerEnableOpenDragGesture: false,
-        drawer: const Drawer(),
+        drawer: const DrawerWidget(),
         backgroundColor: Colors.white,
         body: SafeArea(
           child: Column(
