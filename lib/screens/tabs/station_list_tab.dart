@@ -130,6 +130,14 @@ class StationList extends StatelessWidget {
                         const SizedBox(
                           height: 5,
                         ),
+                        TextRegular(
+                          text: '₱12.00/gallon',
+                          fontSize: 15,
+                          color: primary,
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
                         TextBold(
                           text: '2.5km away',
                           fontSize: 16,
