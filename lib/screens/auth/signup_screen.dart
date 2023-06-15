@@ -76,7 +76,7 @@ class SignupScreen extends StatelessWidget {
                   controller: nameController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter a name';
+                      return 'Please enter your name';
                     }
                     return null;
                   },
@@ -93,9 +93,9 @@ class SignupScreen extends StatelessWidget {
                   controller: contactnumberController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter a mobile number';
+                      return 'Please enter a contact number';
                     } else if (value.length != 11 || !value.startsWith('09')) {
-                      return 'Please enter a valid mobile number';
+                      return 'Please enter a valid contact number';
                     }
 
                     return null;
