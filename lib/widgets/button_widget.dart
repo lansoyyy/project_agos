@@ -1,3 +1,4 @@
+import 'package:agos/utils/colors.dart';
 import 'package:agos/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +10,7 @@ class ButtonWidget extends StatelessWidget {
   final double? height;
   final double? radius;
   final Color? color;
+  final Color? labelColor;
 
   const ButtonWidget(
       {super.key,
@@ -18,7 +20,8 @@ class ButtonWidget extends StatelessWidget {
       this.fontSize = 18,
       this.height = 50,
       this.radius = 5,
-      this.color = Colors.blue});
+      this.labelColor = primary,
+      this.color = primary});
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
@@ -28,7 +31,6 @@ class ButtonWidget extends StatelessWidget {
         height: height,
         color: color,
         onPressed: onPressed,
-        child:
-            TextRegular(text: label, fontSize: fontSize!, color: Colors.white));
+        child: TextBold(text: label, fontSize: fontSize!, color: labelColor!));
   }
 }

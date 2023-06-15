@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:agos/widgets/text_widget.dart';
 
 class TextFieldWidget extends StatefulWidget {
   final String label;
@@ -10,19 +9,35 @@ class TextFieldWidget extends StatefulWidget {
   final double? height;
   final int? maxLine;
   final TextInputType? inputType;
-  final bool? isPassword;
+  late bool? showEye;
+  late Color? color;
+  final IconData icon;
+  late Color? borderColor;
+  late Color? hintColor;
+  late double? radius;
+  final String? Function(String?)? validator; // Add validator parameter
 
-  TextFieldWidget(
-      {super.key,
-      required this.label,
-      this.hint = '',
-      required this.controller,
-      this.isObscure = false,
-      this.width = 300,
-      this.height = 40,
-      this.maxLine = 1,
-      this.isPassword = false,
-      this.inputType = TextInputType.text});
+  final TextCapitalization? textCapitalization;
+
+  TextFieldWidget({
+    super.key,
+    required this.icon,
+    required this.label,
+    this.hint = '',
+    required this.controller,
+    this.isObscure = false,
+    this.width = double.infinity,
+    this.height = 40,
+    this.maxLine = 1,
+    this.hintColor = Colors.white,
+    this.borderColor = Colors.transparent,
+    this.showEye = false,
+    this.color = Colors.white,
+    this.radius = 5,
+    this.textCapitalization = TextCapitalization.sentences,
+    this.inputType = TextInputType.text,
+    this.validator, // Add validator parameter
+  });
 
   @override
   State<TextFieldWidget> createState() => _TextFieldWidgetState();
@@ -31,45 +46,63 @@ class TextFieldWidget extends StatefulWidget {
 class _TextFieldWidgetState extends State<TextFieldWidget> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        TextRegular(text: widget.label, fontSize: 12, color: Colors.black),
-        const SizedBox(
-          height: 5,
-        ),
-        Container(
-          height: widget.height,
-          width: widget.width,
-          decoration: BoxDecoration(
-              border: Border.all(
-                color: Colors.black,
-              ),
-              borderRadius: BorderRadius.circular(5)),
-          child: TextFormField(
-            keyboardType: widget.inputType,
-            decoration: InputDecoration(
-              suffixIcon: widget.isPassword!
-                  ? IconButton(
-                      onPressed: () {
-                        setState(() {
-                          widget.isObscure = !widget.isObscure!;
-                        });
-                      },
-                      icon: widget.isObscure!
-                          ? const Icon(Icons.remove_red_eye)
-                          : const Icon(Icons.visibility_off),
-                    )
-                  : const SizedBox(),
-              hintText: widget.hint,
-              border: InputBorder.none,
+    return Padding(
+      padding: const EdgeInsets.only(left: 10, right: 10),
+      child: TextFormField(
+        style: const TextStyle(color: Colors.white, fontFamily: 'QRegular'),
+        textCapitalization: widget.textCapitalization!,
+        keyboardType: widget.inputType,
+        decoration: InputDecoration(
+          labelStyle: const TextStyle(color: Colors.white),
+          hintStyle:
+              const TextStyle(color: Colors.white, fontFamily: 'QRegular'),
+          enabledBorder: const UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.white), // Set underline color
+          ),
+          prefixIcon: Icon(
+            widget.icon,
+            color: Colors.white,
+          ),
+          suffixIcon: widget.showEye! == true
+              ? IconButton(
+                  onPressed: () {
+                    setState(() {
+                      widget.isObscure = !widget.isObscure!;
+                    });
+                  },
+                  icon: widget.isObscure!
+                      ? const Icon(
+                          Icons.visibility,
+                          color: Colors.white,
+                        )
+                      : const Icon(
+                          Icons.visibility_off,
+                          color: Colors.white,
+                        ))
+              : const SizedBox(),
+          hintText: widget.hint,
+          errorBorder: OutlineInputBorder(
+            borderSide: const BorderSide(
+              color: Colors.red,
             ),
-            maxLines: widget.maxLine,
-            obscureText: widget.isObscure!,
-            controller: widget.controller,
+            borderRadius: BorderRadius.circular(5),
+          ),
+          errorStyle: const TextStyle(
+            fontFamily: 'QBold',
+          ),
+          focusedErrorBorder: OutlineInputBorder(
+            borderSide: const BorderSide(
+              color: Colors.red,
+            ),
+            borderRadius: BorderRadius.circular(5),
           ),
         ),
-      ],
+
+        maxLines: widget.maxLine,
+        obscureText: widget.isObscure!,
+        controller: widget.controller,
+        validator: widget.validator, // Pass the validator to the TextFormField
+      ),
     );
   }
 }
