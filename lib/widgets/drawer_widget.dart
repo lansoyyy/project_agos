@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:agos/screens/pages/history_screen.dart';
+import 'package:agos/screens/pages/messages/messages_screen.dart';
 import 'package:agos/utils/colors.dart';
 import 'package:agos/widgets/text_widget.dart';
 import 'package:agos/widgets/textfield_widget.dart';
@@ -345,9 +346,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                         color: Colors.grey,
                       ),
                       onTap: () {
-                        // Navigator.of(context).pushReplacement(
-                        //     MaterialPageRoute(
-                        //         builder: (context) => const TripsPage()));
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => const MessagesScreen()));
                       },
                     ),
                     ListTile(
