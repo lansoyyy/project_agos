@@ -144,6 +144,7 @@ class SignupScreen extends StatelessWidget {
                   height: 20,
                 ),
                 TextFieldWidget(
+                  textCapitalization: TextCapitalization.none,
                   showEye: true,
                   isObscure: true,
                   icon: Icons.lock,

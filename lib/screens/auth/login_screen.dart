@@ -92,6 +92,7 @@ class LoginScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextFieldWidget(
+                      textCapitalization: TextCapitalization.none,
                       showEye: true,
                       isObscure: true,
                       icon: Icons.lock,
