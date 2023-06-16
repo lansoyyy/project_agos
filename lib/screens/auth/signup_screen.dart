@@ -25,7 +25,7 @@ class SignupScreen extends StatelessWidget {
         decoration: const BoxDecoration(
           color: primary,
           image: DecorationImage(
-              opacity: 100,
+              opacity: 150,
               image: AssetImage(
                 'assets/images/background.png',
               ),
@@ -190,7 +190,7 @@ class SignupScreen extends StatelessWidget {
                   children: [
                     TextRegular(
                         text: 'Already have an account?',
-                        fontSize: 12,
+                        fontSize: 14,
                         color: Colors.white),
                     TextButton(
                       onPressed: () {
@@ -198,7 +198,7 @@ class SignupScreen extends StatelessWidget {
                             builder: (context) => LoginScreen()));
                       },
                       child: TextBold(
-                          text: 'Login', fontSize: 14, color: Colors.white),
+                          text: 'Login', fontSize: 15, color: Colors.white),
                     )
                   ],
                 ),

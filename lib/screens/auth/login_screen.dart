@@ -23,7 +23,7 @@ class LoginScreen extends StatelessWidget {
         decoration: const BoxDecoration(
           color: primary,
           image: DecorationImage(
-              opacity: 100,
+              opacity: 150,
               image: AssetImage(
                 'assets/images/background.png',
               ),
@@ -147,6 +147,20 @@ class LoginScreen extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
+                Center(
+                  child: ButtonWidget(
+                    radius: 100,
+                    labelColor: Colors.white,
+                    label: 'SIGNUP',
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => SignupScreen()));
+                    },
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -174,17 +188,16 @@ class LoginScreen extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
                 Center(
-                  child: ButtonWidget(
-                    radius: 100,
-                    labelColor: Colors.white,
-                    label: 'SIGNUP',
-                    onPressed: () {
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => SignupScreen()));
-                    },
+                  child: TextButton(
+                    onPressed: () {},
+                    child: TextBold(
+                      text: 'Continue as Merchant',
+                      fontSize: 15,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
                 const SizedBox(
