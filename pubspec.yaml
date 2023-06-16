@@ -54,6 +54,7 @@ dependencies:
   flutter_spinkit:
   avatar_glow:
   flutter_inapp_notifications:
+  ticket_widget:
 
 dev_dependencies:
   flutter_test:
