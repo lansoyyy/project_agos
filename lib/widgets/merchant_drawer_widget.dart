@@ -1,16 +1,15 @@
 import 'dart:io';
 
-import 'package:agos/screens/pages/history_screen.dart';
-import 'package:agos/screens/pages/messages/messages_screen.dart';
+import 'package:agos/screens/merchant/home_screen.dart';
+import 'package:agos/screens/merchant/login_screen.dart';
+import 'package:agos/screens/merchant/messages/messages_screen.dart';
+import 'package:agos/screens/merchant/pages/aboutus_page.dart';
+import 'package:agos/screens/merchant/pages/contactus_page.dart';
+import 'package:agos/screens/merchant/pages/history_screen.dart';
 import 'package:agos/utils/colors.dart';
 import 'package:agos/widgets/text_widget.dart';
 import 'package:agos/widgets/textfield_widget.dart';
 import 'package:flutter/material.dart';
-
-import '../screens/auth/login_screen.dart';
-import '../screens/home_screen.dart';
-import '../screens/pages/aboutus_page.dart';
-import '../screens/pages/contactus_page.dart';
 
 class MerchantDrawerWidget extends StatefulWidget {
   final GlobalKey? key6;
@@ -332,7 +331,7 @@ class _MerchantDrawerWidgetState extends State<MerchantDrawerWidget> {
                       ),
                       onTap: () {
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => const HomeScreen()));
+                            builder: (context) => const MerchantHomeScreen()));
                       },
                     ),
                     ListTile(
@@ -347,7 +346,8 @@ class _MerchantDrawerWidgetState extends State<MerchantDrawerWidget> {
                       ),
                       onTap: () {
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => const MessagesScreen()));
+                            builder: (context) =>
+                                const MerchantMessagesScreen()));
                       },
                     ),
                     ListTile(
@@ -362,7 +362,8 @@ class _MerchantDrawerWidgetState extends State<MerchantDrawerWidget> {
                       ),
                       onTap: () {
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => const HistoryScreen()));
+                            builder: (context) =>
+                                const MerchantHistoryScreen()));
                       },
                     ),
                     ListTile(
@@ -392,7 +393,8 @@ class _MerchantDrawerWidgetState extends State<MerchantDrawerWidget> {
                       ),
                       onTap: () {
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => const ContactusPage()));
+                            builder: (context) =>
+                                const MerchantContactusPage()));
                       },
                     ),
                     ListTile(
@@ -407,7 +409,7 @@ class _MerchantDrawerWidgetState extends State<MerchantDrawerWidget> {
                       ),
                       onTap: () {
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => const AboutusPage()));
+                            builder: (context) => const MerchantAboutusPage()));
                       },
                     ),
                     ListTile(
@@ -449,7 +451,7 @@ class _MerchantDrawerWidgetState extends State<MerchantDrawerWidget> {
                                         Navigator.of(context).pushReplacement(
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    LoginScreen()));
+                                                    MerchantLoginScreen()));
                                       },
                                       child: const Text(
                                         'Continue',

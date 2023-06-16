@@ -1,3 +1,4 @@
+import 'package:agos/screens/merchant/messages/messages_screen.dart';
 import 'package:agos/screens/tabs/order_list_tab.dart';
 import 'package:agos/utils/colors.dart';
 import 'package:agos/widgets/merchant_drawer_widget.dart';
@@ -134,7 +135,12 @@ class _MerchantHomeScreenState extends State<MerchantHomeScreen> {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(100)),
                               color: primary,
-                              onPressed: (() async {}),
+                              onPressed: (() {
+                                Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const MerchantMessagesScreen()));
+                              }),
                               child: const Icon(
                                 Icons.send,
                                 color: Colors.white,
