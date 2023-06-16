@@ -1,5 +1,5 @@
-import 'package:agos/screens/auth/login_screen.dart';
-import 'package:agos/screens/home_screen.dart';
+import 'package:agos/screens/merchant/home_screen.dart';
+import 'package:agos/screens/merchant/login_screen.dart';
 import 'package:agos/utils/colors.dart';
 import 'package:agos/widgets/button_widget.dart';
 import 'package:agos/widgets/text_widget.dart';
@@ -7,14 +7,17 @@ import 'package:agos/widgets/textfield_widget.dart';
 import 'package:agos/widgets/toast_widget.dart';
 import 'package:flutter/material.dart';
 
-class SignupScreen extends StatelessWidget {
+class MerchantSignupScreen extends StatelessWidget {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final nameController = TextEditingController();
   final addressController = TextEditingController();
   final contactnumberController = TextEditingController();
+  final businesshoursController = TextEditingController();
 
-  SignupScreen({super.key});
+  final priceController = TextEditingController();
+
+  MerchantSignupScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +62,7 @@ class SignupScreen extends StatelessWidget {
                       ),
                     ),
                     TextRegular(
-                      text: 'SIGNUP',
+                      text: 'SIGNING UP AS MERCHANT',
                       fontSize: 18,
                       color: Colors.white,
                     ),
@@ -71,12 +74,12 @@ class SignupScreen extends StatelessWidget {
                 TextFieldWidget(
                   icon: Icons.person,
                   textCapitalization: TextCapitalization.words,
-                  hint: 'Name',
-                  label: 'Name',
+                  hint: 'Name of the Station',
+                  label: 'Name of the Station',
                   controller: nameController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your name';
+                      return 'Please enter a station name';
                     }
                     return null;
                   },
@@ -114,6 +117,37 @@ class SignupScreen extends StatelessWidget {
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter an address';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                TextFieldWidget(
+                  icon: Icons.access_time_rounded,
+                  hint: 'Business Hours (ex.8am - 4pm)',
+                  label: 'Business Hours (ex. 8am - 4pm)',
+                  controller: businesshoursController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your business hours';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                TextFieldWidget(
+                  icon: Icons.price_change_outlined,
+                  inputType: TextInputType.number,
+                  hint: 'Price per Gallon (ex. 12.00)',
+                  label: 'Price per Gallon (ex. 12.00)',
+                  controller: priceController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your price rate';
                     }
                     return null;
                   },
@@ -178,7 +212,7 @@ class SignupScreen extends StatelessWidget {
                     onPressed: () {
                       showToast('Account created succesfully!');
                       Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => const HomeScreen()));
+                          builder: (context) => const MerchantHomeScreen()));
                     },
                   ),
                 ),
@@ -195,7 +229,7 @@ class SignupScreen extends StatelessWidget {
                     TextButton(
                       onPressed: () {
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => LoginScreen()));
+                            builder: (context) => MerchantLoginScreen()));
                       },
                       child: TextBold(
                           text: 'Login', fontSize: 15, color: Colors.white),

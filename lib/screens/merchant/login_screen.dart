@@ -1,4 +1,5 @@
 import 'package:agos/screens/merchant/home_screen.dart';
+import 'package:agos/screens/merchant/signup_screen.dart';
 import 'package:agos/widgets/button_widget.dart';
 import 'package:agos/widgets/text_widget.dart';
 import 'package:agos/widgets/textfield_widget.dart';
@@ -35,7 +36,7 @@ class MerchantLoginScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(
-                  height: 125,
+                  height: 80,
                 ),
                 Center(
                   child: Image.asset(
@@ -246,20 +247,20 @@ class MerchantLoginScreen extends StatelessWidget {
                     },
                   ),
                 ),
-                // const SizedBox(
-                //   height: 20,
-                // ),
-                // Center(
-                //   child: ButtonWidget(
-                //     radius: 100,
-                //     labelColor: Colors.white,
-                //     label: 'SIGNUP',
-                //     onPressed: () {
-                //       Navigator.of(context).pushReplacement(MaterialPageRoute(
-                //           builder: (context) => SignupScreen()));
-                //     },
-                //   ),
-                // ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Center(
+                  child: ButtonWidget(
+                    radius: 100,
+                    labelColor: Colors.white,
+                    label: 'SIGNUP',
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => MerchantSignupScreen()));
+                    },
+                  ),
+                ),
                 const SizedBox(
                   height: 50,
                 ),
