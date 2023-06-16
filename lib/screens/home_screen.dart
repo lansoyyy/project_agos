@@ -1,5 +1,6 @@
 import 'package:agos/screens/pages/history_screen.dart';
 import 'package:agos/screens/tabs/station_list_tab.dart';
+import 'package:agos/screens/webview_screen.dart';
 import 'package:agos/utils/colors.dart';
 import 'package:agos/widgets/drawer_widget.dart';
 import 'package:agos/widgets/text_widget.dart';
@@ -54,7 +55,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: primary,
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const MapviewScreen()));
+                          },
                           icon: const Icon(
                             Icons.travel_explore_rounded,
                             color: primary,
