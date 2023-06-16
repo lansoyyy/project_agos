@@ -1,5 +1,4 @@
-import 'package:agos/screens/auth/signup_screen.dart';
-import 'package:agos/screens/merchant/login_screen.dart';
+import 'package:agos/screens/merchant/home_screen.dart';
 import 'package:agos/widgets/button_widget.dart';
 import 'package:agos/widgets/text_widget.dart';
 import 'package:agos/widgets/textfield_widget.dart';
@@ -7,13 +6,12 @@ import 'package:flutter/material.dart';
 
 import '../../utils/colors.dart';
 import '../../widgets/toast_widget.dart';
-import '../home_screen.dart';
 
-class LoginScreen extends StatelessWidget {
+class MerchantLoginScreen extends StatelessWidget {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  LoginScreen({super.key});
+  MerchantLoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +56,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                     TextRegular(
-                      text: 'LOGIN',
+                      text: 'LOGGING IN AS MERCHANT',
                       fontSize: 18,
                       color: Colors.white,
                     ),
@@ -131,7 +129,7 @@ class LoginScreen extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(
-                  height: 50,
+                  height: 30,
                 ),
                 Center(
                   child: ButtonWidget(
@@ -139,71 +137,26 @@ class LoginScreen extends StatelessWidget {
                     color: Colors.white,
                     label: 'LOGIN',
                     onPressed: () {
-                      showToast('Logged in succesfully!');
+                      showToast('Logged in as merchant');
                       Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => const HomeScreen()));
+                          builder: (context) => const MerchantHomeScreen()));
                     },
                   ),
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Center(
-                  child: ButtonWidget(
-                    radius: 100,
-                    labelColor: Colors.white,
-                    label: 'SIGNUP',
-                    onPressed: () {
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => SignupScreen()));
-                    },
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const SizedBox(
-                      width: 80,
-                      child: Divider(
-                        color: Colors.white,
-                        thickness: 2,
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    TextRegular(text: 'or', fontSize: 18, color: Colors.white),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    const SizedBox(
-                      width: 80,
-                      child: Divider(
-                        color: Colors.white,
-                        thickness: 2,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Center(
-                  child: TextButton(
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => MerchantLoginScreen()));
-                    },
-                    child: TextBold(
-                      text: 'Continue as Merchant',
-                      fontSize: 15,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
+                // const SizedBox(
+                //   height: 20,
+                // ),
+                // Center(
+                //   child: ButtonWidget(
+                //     radius: 100,
+                //     labelColor: Colors.white,
+                //     label: 'SIGNUP',
+                //     onPressed: () {
+                //       Navigator.of(context).pushReplacement(MaterialPageRoute(
+                //           builder: (context) => SignupScreen()));
+                //     },
+                //   ),
+                // ),
                 const SizedBox(
                   height: 50,
                 ),
