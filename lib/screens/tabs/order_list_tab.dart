@@ -183,10 +183,26 @@ class OrderList extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          TextBold(
-                            text: 'Customer Name',
-                            fontSize: 18,
-                            color: Colors.black,
+                          Row(
+                            children: [
+                              TextBold(
+                                text: 'Customer Name',
+                                fontSize: 18,
+                                color: Colors.black,
+                              ),
+                              const SizedBox(
+                                width: 20,
+                              ),
+                              ButtonWidget(
+                                radius: 100,
+                                width: 65,
+                                height: 30,
+                                label: 'Done',
+                                labelColor: Colors.white,
+                                fontSize: 11,
+                                onPressed: () {},
+                              ),
+                            ],
                           ),
                           SizedBox(
                             width: 180,
