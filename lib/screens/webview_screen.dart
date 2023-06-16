@@ -28,52 +28,67 @@ class MapviewScreenState extends State<MapviewScreen> {
     return Scaffold(
       drawer: const DrawerWidget(),
       backgroundColor: Colors.white,
-      body: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Builder(builder: (context) {
-                return IconButton(
-                  onPressed: () {
-                    Scaffold.of(context).openDrawer();
-                  },
-                  icon: const Icon(
-                    Icons.menu_rounded,
-                    color: primary,
-                  ),
-                );
-              }),
-              TextBold(
-                text: 'HOME',
-                fontSize: 24,
-                color: primary,
-              ),
-              IconButton(
-                onPressed: () {
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => const HomeScreen()));
-                },
-                icon: const Icon(
-                  Icons.list_alt_rounded,
+      body: SafeArea(
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Builder(builder: (context) {
+                  return IconButton(
+                    onPressed: () {
+                      Scaffold.of(context).openDrawer();
+                    },
+                    icon: const Icon(
+                      Icons.menu_rounded,
+                      color: primary,
+                    ),
+                  );
+                }),
+                TextBold(
+                  text: 'HOME',
+                  fontSize: 24,
                   color: primary,
                 ),
-              )
-            ],
-          ),
-          GoogleMap(
-            mapType: MapType.normal,
-            initialCameraPosition: kGooglePlex,
-            onMapCreated: (GoogleMapController controller) {
-              _controller.complete(controller);
-            },
-          ),
-        ],
+                IconButton(
+                  onPressed: () {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => const HomeScreen()));
+                  },
+                  icon: const Icon(
+                    Icons.list_alt_rounded,
+                    color: primary,
+                  ),
+                )
+              ],
+            ),
+            Expanded(
+              child: SizedBox(
+                child: GoogleMap(
+                  mapToolbarEnabled: false,
+                  zoomControlsEnabled: false,
+                  buildingsEnabled: true,
+                  compassEnabled: true,
+                  myLocationButtonEnabled: true,
+                  myLocationEnabled: true,
+                  mapType: MapType.normal,
+                  initialCameraPosition: kGooglePlex,
+                  onMapCreated: (GoogleMapController controller) {
+                    _controller.complete(controller);
+                  },
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: primary,
         onPressed: () {},
-        label: const Text('To the lake!'),
-        icon: const Icon(Icons.directions_boat),
+        child: const Icon(
+          Icons.message,
+          color: Colors.white,
+        ),
       ),
     );
   }
