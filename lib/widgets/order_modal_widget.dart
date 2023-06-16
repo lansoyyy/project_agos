@@ -1,5 +1,7 @@
 import 'package:agos/widgets/text_widget.dart';
+import 'package:agos/widgets/ticket_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:ticket_widget/ticket_widget.dart';
 
 import '../utils/colors.dart';
 import 'button_widget.dart';
@@ -249,7 +251,29 @@ class _OrderModalWidgetState extends State<OrderModalWidget> {
                     labelColor: Colors.white,
                     color: primary,
                     label: 'ORDER',
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pop(context);
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Dialog(
+                              backgroundColor: Colors.transparent,
+                              child: TicketWidget(
+                                width: 600,
+                                height: 500,
+                                isCornerRounded: true,
+                                padding: const EdgeInsets.all(5),
+                                child: TicketData(
+                                    stationName: 'Station Name',
+                                    stationNumber: 'Station Contact Number',
+                                    passenger: 'Customer Name',
+                                    customerNumber: 'Customer contact number',
+                                    customerLocation: 'Customer Address',
+                                    fare: 'Payment'),
+                              ),
+                            );
+                          });
+                    },
                   ),
                 ),
                 const SizedBox(

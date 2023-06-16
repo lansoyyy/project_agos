@@ -1,3 +1,4 @@
+import 'package:agos/screens/pages/map_page.dart';
 import 'package:agos/utils/colors.dart';
 import 'package:agos/widgets/button_widget.dart';
 import 'package:agos/widgets/order_modal_widget.dart';
@@ -273,7 +274,10 @@ class StationList extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => const MapScreen()));
+                              },
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
