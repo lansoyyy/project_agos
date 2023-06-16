@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "422839672640",
+    "project_id": "agos-ddeb3",
+    "storage_bucket": "agos-ddeb3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:422839672640:android:3927e7c941a077986724a5",
+        "android_client_info": {
+          "package_name": "com.example.agos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "422839672640-3oa7vfhrsq3r1bq950ohf21ou9mq10hr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChOGfEDmsAAG7yLcwQnljtG4Ue2PYGO9A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "422839672640-3oa7vfhrsq3r1bq950ohf21ou9mq10hr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
