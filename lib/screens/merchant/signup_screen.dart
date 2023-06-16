@@ -87,6 +87,39 @@ class MerchantSignupScreen extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextRegular(
+                        text: 'Station picture',
+                        fontSize: 12,
+                        color: Colors.white),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    const SizedBox(
+                      height: 25,
+                      child: VerticalDivider(
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    ButtonWidget(
+                      height: 35,
+                      width: 125,
+                      radius: 100,
+                      labelColor: Colors.white,
+                      fontSize: 12,
+                      label: 'Upload image',
+                      onPressed: () {},
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
                 TextFieldWidget(
                   icon: Icons.phone,
                   textCapitalization: TextCapitalization.none,
