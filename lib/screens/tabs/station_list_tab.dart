@@ -1,5 +1,6 @@
 import 'package:agos/utils/colors.dart';
 import 'package:agos/widgets/button_widget.dart';
+import 'package:agos/widgets/order_modal_widget.dart';
 import 'package:flutter/material.dart';
 
 import '../../widgets/text_widget.dart';
@@ -105,7 +106,9 @@ class StationList extends StatelessWidget {
                                 labelColor: Colors.white,
                                 color: secondary,
                                 label: 'CONTACT',
-                                onPressed: () {},
+                                onPressed: () {
+                                  // Navigate to chat page
+                                },
                               ),
                             ),
                             const SizedBox(
@@ -117,7 +120,15 @@ class StationList extends StatelessWidget {
                                 labelColor: Colors.white,
                                 color: primary,
                                 label: 'ORDER',
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                  showModalBottomSheet(
+                                      isScrollControlled: true,
+                                      context: context,
+                                      builder: (context) {
+                                        return const OrderModalWidget();
+                                      });
+                                },
                               ),
                             ),
                           ],
