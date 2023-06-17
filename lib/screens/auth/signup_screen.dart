@@ -9,16 +9,33 @@ import 'package:agos/widgets/toast_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class SignupScreen extends StatelessWidget {
+import '../../plugin/location.dart';
+
+class SignupScreen extends StatefulWidget {
+  const SignupScreen({super.key});
+
+  @override
+  State<SignupScreen> createState() => _SignupScreenState();
+}
+
+class _SignupScreenState extends State<SignupScreen> {
+  @override
+  void initState() {
+    super.initState();
+    determinePosition();
+  }
+
   final emailController = TextEditingController();
+
   final passwordController = TextEditingController();
+
   final nameController = TextEditingController();
+
   final addressController = TextEditingController();
+
   final contactnumberController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
-
-  SignupScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -203,7 +220,7 @@ class SignupScreen extends StatelessWidget {
                         onPressed: () {
                           Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
-                                  builder: (context) => LoginScreen()));
+                                  builder: (context) => const LoginScreen()));
                         },
                         child: TextBold(
                             text: 'Login', fontSize: 15, color: Colors.white),

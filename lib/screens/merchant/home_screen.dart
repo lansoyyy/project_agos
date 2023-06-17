@@ -1,9 +1,13 @@
+import 'package:agos/plugin/location.dart';
 import 'package:agos/screens/merchant/messages/messages_screen.dart';
 import 'package:agos/screens/tabs/order_list_tab.dart';
 import 'package:agos/utils/colors.dart';
 import 'package:agos/widgets/merchant_drawer_widget.dart';
 import 'package:agos/widgets/text_widget.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 
 class MerchantHomeScreen extends StatefulWidget {
   const MerchantHomeScreen({super.key});
@@ -13,6 +17,22 @@ class MerchantHomeScreen extends StatefulWidget {
 }
 
 class _MerchantHomeScreenState extends State<MerchantHomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    determinePosition();
+    Geolocator.getCurrentPosition().then((position) {
+      FirebaseFirestore.instance
+          .collection('Merchant')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .update({
+        'location': {'lat': position.latitude, 'long': position.longitude},
+      });
+    }).catchError((error) {
+      print('Error getting location: $error');
+    });
+  }
+
   final messageController = TextEditingController();
 
   String filter = '';

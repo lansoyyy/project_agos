@@ -15,6 +15,8 @@ import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as path;
 
+import '../../plugin/location.dart';
+
 class MerchantSignupScreen extends StatefulWidget {
   const MerchantSignupScreen({super.key});
 
@@ -23,6 +25,12 @@ class MerchantSignupScreen extends StatefulWidget {
 }
 
 class _MerchantSignupScreenState extends State<MerchantSignupScreen> {
+  @override
+  void initState() {
+    super.initState();
+    determinePosition();
+  }
+
   final emailController = TextEditingController();
 
   final passwordController = TextEditingController();
@@ -361,7 +369,8 @@ class _MerchantSignupScreenState extends State<MerchantSignupScreen> {
                         onPressed: () {
                           Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
-                                  builder: (context) => MerchantLoginScreen()));
+                                  builder: (context) =>
+                                      const MerchantLoginScreen()));
                         },
                         child: TextBold(
                             text: 'Login', fontSize: 15, color: Colors.white),

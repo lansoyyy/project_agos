@@ -6,16 +6,30 @@ import 'package:agos/widgets/textfield_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../../plugin/location.dart';
 import '../../utils/colors.dart';
 import '../../widgets/toast_widget.dart';
 
-class MerchantLoginScreen extends StatelessWidget {
+class MerchantLoginScreen extends StatefulWidget {
+  const MerchantLoginScreen({super.key});
+
+  @override
+  State<MerchantLoginScreen> createState() => _MerchantLoginScreenState();
+}
+
+class _MerchantLoginScreenState extends State<MerchantLoginScreen> {
+  @override
+  void initState() {
+    super.initState();
+    determinePosition();
+  }
+
   final emailController = TextEditingController();
+
   final passwordController = TextEditingController();
 
-  MerchantLoginScreen({super.key});
-
   final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -263,7 +277,8 @@ class MerchantLoginScreen extends StatelessWidget {
                       label: 'SIGNUP',
                       onPressed: () {
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => MerchantSignupScreen()));
+                            builder: (context) =>
+                                const MerchantSignupScreen()));
                       },
                     ),
                   ),
