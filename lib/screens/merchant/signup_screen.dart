@@ -277,8 +277,8 @@ class _MerchantSignupScreenState extends State<MerchantSignupScreen> {
                   TextFieldWidget(
                     icon: Icons.price_change_outlined,
                     inputType: TextInputType.number,
-                    hint: 'Price per Gallon (ex. 12.00)',
-                    label: 'Price per Gallon (ex. 12.00)',
+                    hint: 'Price per Gallon (ex. 12)',
+                    label: 'Price per Gallon (ex. 12)',
                     controller: priceController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {

@@ -15,6 +15,7 @@ class StationList extends StatelessWidget {
     return StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('Merchant')
+            .orderBy('dateTime', descending: true)
 
             // .where('dateTime', isLessThan: date)
             .snapshots(),

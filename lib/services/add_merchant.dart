@@ -22,7 +22,8 @@ Future addMerchant(
     'reviews': [],
     'businessHours': businessHours,
     'price': price,
-    'stationImage': stationImage
+    'stationImage': stationImage,
+    'dateTime': DateTime.now(),
   };
 
   await docUser.set(json);
