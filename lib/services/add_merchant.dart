@@ -19,7 +19,10 @@ Future addMerchant(
     'type': 'Merchant',
     'offer': 'No Offer',
     'stars': 0,
-    'reviews': []
+    'reviews': [],
+    'businessHours': businessHours,
+    'price': price,
+    'stationImage': stationImage
   };
 
   await docUser.set(json);
