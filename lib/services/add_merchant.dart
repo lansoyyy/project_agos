@@ -17,7 +17,9 @@ Future addMerchant(
     'location': {'lat': 0.00, 'long': 0.00},
     'profilePicture': 'https://cdn-icons-png.flaticon.com/256/149/149071.png',
     'type': 'Merchant',
-    'offer': 'No Offer'
+    'offer': 'No Offer',
+    'stars': 0,
+    'reviews': []
   };
 
   await docUser.set(json);
