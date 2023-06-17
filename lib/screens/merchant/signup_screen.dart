@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:agos/screens/merchant/home_screen.dart';
 import 'package:agos/screens/merchant/login_screen.dart';
 import 'package:agos/services/add_merchant.dart';
@@ -7,20 +9,101 @@ import 'package:agos/widgets/text_widget.dart';
 import 'package:agos/widgets/textfield_widget.dart';
 import 'package:agos/widgets/toast_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart' as path;
 
-class MerchantSignupScreen extends StatelessWidget {
+class MerchantSignupScreen extends StatefulWidget {
+  const MerchantSignupScreen({super.key});
+
+  @override
+  State<MerchantSignupScreen> createState() => _MerchantSignupScreenState();
+}
+
+class _MerchantSignupScreenState extends State<MerchantSignupScreen> {
   final emailController = TextEditingController();
+
   final passwordController = TextEditingController();
+
   final nameController = TextEditingController();
+
   final addressController = TextEditingController();
+
   final contactnumberController = TextEditingController();
+
   final businesshoursController = TextEditingController();
 
   final priceController = TextEditingController();
-  String imageURL = '';
 
-  MerchantSignupScreen({super.key});
+  late String fileName = '';
+
+  late File imageFile;
+
+  late String imageURL = '';
+
+  Future<void> uploadPicture(String inputSource) async {
+    final picker = ImagePicker();
+    XFile pickedImage;
+    try {
+      pickedImage = (await picker.pickImage(
+          source: inputSource == 'camera'
+              ? ImageSource.camera
+              : ImageSource.gallery,
+          maxWidth: 1920))!;
+
+      fileName = path.basename(pickedImage.path);
+      imageFile = File(pickedImage.path);
+
+      try {
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) => Padding(
+            padding: const EdgeInsets.only(left: 30, right: 30),
+            child: AlertDialog(
+                title: Row(
+              children: const [
+                CircularProgressIndicator(
+                  color: Colors.black,
+                ),
+                SizedBox(
+                  width: 20,
+                ),
+                Text(
+                  'Loading . . .',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'QRegular'),
+                ),
+              ],
+            )),
+          ),
+        );
+
+        await firebase_storage.FirebaseStorage.instance
+            .ref('Users/$fileName')
+            .putFile(imageFile);
+        imageURL = await firebase_storage.FirebaseStorage.instance
+            .ref('Users/$fileName')
+            .getDownloadURL();
+
+        setState(() {});
+
+        Navigator.of(context).pop();
+      } on firebase_storage.FirebaseException catch (error) {
+        if (kDebugMode) {
+          print(error);
+        }
+      }
+    } catch (err) {
+      if (kDebugMode) {
+        print(err);
+      }
+    }
+  }
 
   final _formKey = GlobalKey<FormState>();
 
@@ -119,8 +202,11 @@ class MerchantSignupScreen extends StatelessWidget {
                         radius: 100,
                         labelColor: Colors.white,
                         fontSize: 12,
-                        label: 'Upload image',
-                        onPressed: () {},
+                        label:
+                            imageURL == '' ? 'Upload image' : 'Reupload image',
+                        onPressed: () {
+                          uploadPicture('camera');
+                        },
                       ),
                     ],
                   ),
