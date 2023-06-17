@@ -5,6 +5,7 @@ import 'package:agos/screens/pages/messages/messages_screen.dart';
 import 'package:agos/utils/colors.dart';
 import 'package:agos/widgets/text_widget.dart';
 import 'package:agos/widgets/textfield_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../screens/auth/login_screen.dart';
@@ -429,8 +430,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                                     ),
                                     MaterialButton(
                                       onPressed: () async {
-                                        // await FirebaseAuth.instance
-                                        //     .signOut();
+                                        await FirebaseAuth.instance.signOut();
                                         Navigator.of(context).pushReplacement(
                                             MaterialPageRoute(
                                                 builder: (context) =>

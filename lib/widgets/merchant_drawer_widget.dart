@@ -9,6 +9,7 @@ import 'package:agos/screens/merchant/pages/history_screen.dart';
 import 'package:agos/utils/colors.dart';
 import 'package:agos/widgets/text_widget.dart';
 import 'package:agos/widgets/textfield_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class MerchantDrawerWidget extends StatefulWidget {
@@ -446,8 +447,7 @@ class _MerchantDrawerWidgetState extends State<MerchantDrawerWidget> {
                                     ),
                                     MaterialButton(
                                       onPressed: () async {
-                                        // await FirebaseAuth.instance
-                                        //     .signOut();
+                                        await FirebaseAuth.instance.signOut();
                                         Navigator.of(context).pushReplacement(
                                             MaterialPageRoute(
                                                 builder: (context) =>
