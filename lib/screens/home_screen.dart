@@ -206,7 +206,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             unselectedLabelColor: Colors.grey,
                             tabs: [
                               Tab(
-                                text: 'Recommended',
+                                text: 'Cheapest',
                               ),
                               Tab(
                                 text: 'Nearest',
