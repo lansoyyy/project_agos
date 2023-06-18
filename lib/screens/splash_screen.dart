@@ -30,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
               if (snapshot.hasData) {
                 return const HomeScreen();
               } else {
-                return LoginScreen();
+                return const LoginScreen();
               }
             }),
       ));

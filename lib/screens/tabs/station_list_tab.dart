@@ -1,4 +1,5 @@
 import 'package:agos/screens/pages/map_page.dart';
+import 'package:agos/services/distance_calculations.dart';
 import 'package:agos/utils/colors.dart';
 import 'package:agos/widgets/button_widget.dart';
 import 'package:agos/widgets/order_modal_widget.dart';
@@ -8,10 +9,14 @@ import 'package:flutter/material.dart';
 import '../../widgets/text_widget.dart';
 
 class StationList extends StatelessWidget {
-  const StationList({super.key});
+  const StationList({super.key, required this.myLat, required this.myLong});
+
+  final double myLat;
+  final double myLong;
 
   @override
   Widget build(BuildContext context) {
+    print(myLat);
     return StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('Merchant')
@@ -284,7 +289,8 @@ class StationList extends StatelessWidget {
                                   height: 5,
                                 ),
                                 TextBold(
-                                  text: '2.5km away',
+                                  text:
+                                      '${calculateDistance(myLat, myLong, merchantdata['location']['lat'], merchantdata['location']['long']).toStringAsFixed(2)}km away',
                                   fontSize: 16,
                                   color: primary,
                                 ),

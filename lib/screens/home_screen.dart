@@ -217,13 +217,22 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                     ),
-                    const Expanded(
+                    Expanded(
                       child: SizedBox(
                         child: TabBarView(
                           children: [
-                            StationList(),
-                            StationList(),
-                            StationList(),
+                            StationList(
+                              myLat: lat,
+                              myLong: long,
+                            ),
+                            StationList(
+                              myLat: lat,
+                              myLong: long,
+                            ),
+                            StationList(
+                              myLat: lat,
+                              myLong: long,
+                            ),
                           ],
                         ),
                       ),
