@@ -181,9 +181,9 @@ class StationList extends StatelessWidget {
                             width: 120,
                             height: 175,
                             decoration: BoxDecoration(
-                              image: const DecorationImage(
-                                image: AssetImage(
-                                  'assets/images/station.png',
+                              image: DecorationImage(
+                                image: NetworkImage(
+                                  merchantdata['stationImage'],
                                 ),
                                 fit: BoxFit.cover,
                               ),
