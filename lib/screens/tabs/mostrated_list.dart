@@ -1,28 +1,27 @@
 import 'package:agos/screens/pages/map_page.dart';
-import 'package:agos/services/distance_calculations.dart';
 import 'package:agos/utils/colors.dart';
 import 'package:agos/widgets/button_widget.dart';
 import 'package:agos/widgets/order_modal_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import '../../services/distance_calculations.dart';
+import '../../widgets/build_stars.dart';
 import '../../widgets/text_widget.dart';
 
-class StationList extends StatelessWidget {
-  const StationList({super.key, required this.myLat, required this.myLong});
+class MostRatedStationList extends StatelessWidget {
+  const MostRatedStationList(
+      {super.key, required this.myLat, required this.myLong});
 
   final double myLat;
   final double myLong;
 
   @override
   Widget build(BuildContext context) {
-    print(myLat);
     return StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('Merchant')
-            .orderBy('dateTime', descending: true)
-
-            // .where('dateTime', isLessThan: date)
+            .orderBy('stars', descending: true)
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
@@ -33,13 +32,15 @@ class StationList extends StatelessWidget {
             return const Padding(
               padding: EdgeInsets.only(top: 50),
               child: Center(
-                  child: CircularProgressIndicator(
-                color: Colors.black,
-              )),
+                child: CircularProgressIndicator(
+                  color: Colors.black,
+                ),
+              ),
             );
           }
 
           final data = snapshot.requireData;
+
           return ListView.separated(
             itemCount: data.docs.length,
             separatorBuilder: (context, index) {
@@ -199,40 +200,13 @@ class StationList extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Row(
-                                  children: const [
-                                    Icon(
-                                      Icons.star,
-                                      color: Colors.amber,
-                                      size: 14,
-                                    ),
-                                    Icon(
-                                      Icons.star,
-                                      color: Colors.amber,
-                                      size: 14,
-                                    ),
-                                    Icon(
-                                      Icons.star,
-                                      color: Colors.amber,
-                                      size: 14,
-                                    ),
-                                    Icon(
-                                      Icons.star,
-                                      color: Colors.amber,
-                                      size: 14,
-                                    ),
-                                    Icon(
-                                      Icons.star_half,
-                                      color: Colors.amber,
-                                      size: 14,
-                                    ),
-                                  ],
-                                ),
+                                buildRatingStars(
+                                    merchantdata['stars'].toDouble()),
                                 const SizedBox(
                                   width: 5,
                                 ),
                                 TextBold(
-                                  text: '4.5',
+                                  text: merchantdata['stars'].toString(),
                                   fontSize: 15,
                                   color: primary,
                                 ),

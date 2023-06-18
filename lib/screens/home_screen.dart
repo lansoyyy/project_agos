@@ -1,5 +1,7 @@
 import 'package:agos/screens/pages/history_screen.dart';
-import 'package:agos/screens/tabs/station_list_tab.dart';
+import 'package:agos/screens/tabs/mostrated_list.dart';
+import 'package:agos/screens/tabs/nearest_station_list_tab.dart';
+import 'package:agos/screens/tabs/recommended_list.dart';
 import 'package:agos/screens/webview_screen.dart';
 import 'package:agos/utils/colors.dart';
 import 'package:agos/widgets/drawer_widget.dart';
@@ -221,15 +223,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: SizedBox(
                         child: TabBarView(
                           children: [
-                            StationList(
+                            RecommendedStationList(
                               myLat: lat,
                               myLong: long,
                             ),
-                            StationList(
+                            NearestStationList(
                               myLat: lat,
                               myLong: long,
                             ),
-                            StationList(
+                            MostRatedStationList(
                               myLat: lat,
                               myLong: long,
                             ),
