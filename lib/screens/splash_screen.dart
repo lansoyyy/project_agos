@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:agos/screens/home_screen.dart';
 import 'package:agos/utils/colors.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
@@ -17,6 +18,8 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   final box = GetStorage();
+
+  bool accExist = false;
   @override
   void initState() {
     // TODO: implement initState
@@ -28,7 +31,16 @@ class _SplashScreenState extends State<SplashScreen> {
             stream: FirebaseAuth.instance.authStateChanges(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return const HomeScreen();
+                FirebaseFirestore.instance
+                    .collection('Users')
+                    .doc(snapshot.data!.uid)
+                    .get()
+                    .then((DocumentSnapshot querySnapshot) async {
+                  setState(() {
+                    accExist = querySnapshot.exists;
+                  });
+                });
+                return accExist ? const HomeScreen() : const LoginScreen();
               } else {
                 return const LoginScreen();
               }

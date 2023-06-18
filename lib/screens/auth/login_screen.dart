@@ -278,7 +278,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       label: 'SIGNUP',
                       onPressed: () {
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => SignupScreen()));
+                            builder: (context) => const SignupScreen()));
                       },
                     ),
                   ),
@@ -319,7 +319,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: TextButton(
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => MerchantLoginScreen()));
+                            builder: (context) => const MerchantLoginScreen()));
                       },
                       child: TextBold(
                         text: 'Continue as Merchant',
