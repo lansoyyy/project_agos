@@ -7,7 +7,14 @@ import '../utils/colors.dart';
 import 'button_widget.dart';
 
 class OrderModalWidget extends StatefulWidget {
-  const OrderModalWidget({super.key});
+  const OrderModalWidget(
+      {super.key,
+      required this.address,
+      required this.name,
+      required this.number});
+  final String address;
+  final String name;
+  final String number;
 
   @override
   State<OrderModalWidget> createState() => _OrderModalWidgetState();
@@ -47,7 +54,7 @@ class _OrderModalWidgetState extends State<OrderModalWidget> {
                   ),
                 ),
                 TextBold(
-                  text: 'Name of the Station',
+                  text: widget.name,
                   fontSize: 24,
                   color: Colors.black,
                 ),
@@ -68,7 +75,7 @@ class _OrderModalWidgetState extends State<OrderModalWidget> {
                       width: 5,
                     ),
                     TextRegular(
-                      text: 'Address of the Station',
+                      text: widget.address,
                       fontSize: 14,
                       color: Colors.black,
                     ),
@@ -88,7 +95,7 @@ class _OrderModalWidgetState extends State<OrderModalWidget> {
                       width: 5,
                     ),
                     TextRegular(
-                      text: 'Contact Number of the Station',
+                      text: widget.number,
                       fontSize: 14,
                       color: Colors.black,
                     ),
@@ -179,7 +186,7 @@ class _OrderModalWidgetState extends State<OrderModalWidget> {
                             children: [
                               IconButton(
                                 onPressed: () {
-                                  if (qty != 0) {
+                                  if (qty != 1) {
                                     setState(
                                       () {
                                         qty--;

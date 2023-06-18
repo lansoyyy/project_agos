@@ -175,7 +175,12 @@ class RecommendedStationList extends StatelessWidget {
                                             isScrollControlled: true,
                                             context: context,
                                             builder: (context) {
-                                              return const OrderModalWidget();
+                                              return OrderModalWidget(
+                                                address:
+                                                    merchantdata['address'],
+                                                name: merchantdata['name'],
+                                                number: merchantdata['number'],
+                                              );
                                             });
                                       },
                                     ),
