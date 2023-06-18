@@ -224,14 +224,17 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: TabBarView(
                           children: [
                             RecommendedStationList(
+                              filter: filter,
                               myLat: lat,
                               myLong: long,
                             ),
                             NearestStationList(
+                              filter: filter,
                               myLat: lat,
                               myLong: long,
                             ),
                             MostRatedStationList(
+                              filter: filter,
                               myLat: lat,
                               myLong: long,
                             ),

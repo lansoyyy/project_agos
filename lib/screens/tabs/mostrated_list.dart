@@ -4,24 +4,30 @@ import 'package:agos/widgets/button_widget.dart';
 import 'package:agos/widgets/order_modal_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
+import 'package:intl/intl.dart' show DateFormat, toBeginningOfSentenceCase;
 import '../../services/distance_calculations.dart';
 import '../../widgets/build_stars.dart';
 import '../../widgets/text_widget.dart';
 
 class MostRatedStationList extends StatelessWidget {
   const MostRatedStationList(
-      {super.key, required this.myLat, required this.myLong});
+      {super.key,
+      required this.myLat,
+      required this.myLong,
+      required this.filter});
 
   final double myLat;
   final double myLong;
+  final String filter;
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('Merchant')
-            .orderBy('stars', descending: true)
+            .where('name',
+                isGreaterThanOrEqualTo: toBeginningOfSentenceCase(filter))
+            .where('name', isLessThan: '${toBeginningOfSentenceCase(filter)}z')
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
@@ -40,16 +46,25 @@ class MostRatedStationList extends StatelessWidget {
           }
 
           final data = snapshot.requireData;
+          final sortedData = List<QueryDocumentSnapshot>.from(data.docs);
+
+          // Sort the data by 'price' field
+          sortedData.sort((a, b) {
+            final double priceA = a['stars'].toDouble();
+            final double priceB = b['stars'].toDouble();
+
+            return priceB.compareTo(priceA);
+          });
 
           return ListView.separated(
-            itemCount: data.docs.length,
+            itemCount: sortedData.length,
             separatorBuilder: (context, index) {
               return const Divider(
                 color: primary,
               );
             },
             itemBuilder: (context, index) {
-              final merchantdata = data.docs[index];
+              final merchantdata = sortedData[index];
               return Padding(
                 padding: const EdgeInsets.only(
                     left: 20, right: 20, top: 5, bottom: 5),

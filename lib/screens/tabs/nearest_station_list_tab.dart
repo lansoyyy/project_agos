@@ -6,16 +6,20 @@ import 'package:agos/widgets/button_widget.dart';
 import 'package:agos/widgets/order_modal_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
+import 'package:intl/intl.dart' show DateFormat, toBeginningOfSentenceCase;
 import '../../widgets/build_stars.dart';
 import '../../widgets/text_widget.dart';
 
 class NearestStationList extends StatelessWidget {
   const NearestStationList(
-      {super.key, required this.myLat, required this.myLong});
+      {super.key,
+      required this.myLat,
+      required this.myLong,
+      required this.filter});
 
   final double myLat;
   final double myLong;
+  final String filter;
   double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
     const int radiusOfEarth = 6371; // in kilometers
     double latDistance = degreesToRadians(lat2 - lat1);
@@ -37,7 +41,12 @@ class NearestStationList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection('Merchant').snapshots(),
+        stream: FirebaseFirestore.instance
+            .collection('Merchant')
+            .where('name',
+                isGreaterThanOrEqualTo: toBeginningOfSentenceCase(filter))
+            .where('name', isLessThan: '${toBeginningOfSentenceCase(filter)}z')
+            .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
             print(snapshot.error);
