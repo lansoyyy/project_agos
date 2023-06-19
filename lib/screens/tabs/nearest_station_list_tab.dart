@@ -198,6 +198,10 @@ class NearestStationList extends StatelessWidget {
                                             context: context,
                                             builder: (context) {
                                               return OrderModalWidget(
+                                                price: merchantdata['price'],
+                                                myLat: myLat,
+                                                myLong: myLong,
+                                                stationid: merchantdata.id,
                                                 address:
                                                     merchantdata['address'],
                                                 name: merchantdata['name'],

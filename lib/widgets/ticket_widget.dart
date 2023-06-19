@@ -99,7 +99,7 @@ class TicketData extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 12.0),
-                child: ticketDetailsWidget('Fare', '${fare}php', '', ''),
+                child: ticketDetailsWidget('Payment', '${fare}php', '', ''),
               ),
             ],
           ),
