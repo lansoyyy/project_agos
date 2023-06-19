@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:agos/screens/home_screen.dart';
+import 'package:agos/screens/pages/messages/messages_screen.dart';
 import 'package:agos/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -84,7 +85,10 @@ class MapviewScreenState extends State<MapviewScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: primary,
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => const MessagesScreen()));
+        },
         child: const Icon(
           Icons.message,
           color: Colors.white,

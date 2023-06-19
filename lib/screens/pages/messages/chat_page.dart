@@ -9,8 +9,6 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../services/add_messages.dart';
 import '../../../widgets/text_widget.dart';
 
-import 'messages_screen.dart';
-
 class ChatPage extends StatefulWidget {
   final String driverId;
   final String driverName;
@@ -92,8 +90,7 @@ class _ChatPageState extends State<ChatPage> {
         appBar: AppBar(
           leading: IconButton(
               onPressed: () {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => const MessagesScreen()));
+                Navigator.of(context).pop();
               },
               icon: const Icon(Icons.arrow_back)),
           centerTitle: true,
@@ -316,6 +313,10 @@ class _ChatPageState extends State<ChatPage> {
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(100)),
                               child: TextFormField(
+                                style: const TextStyle(
+                                  fontFamily: 'QBold',
+                                  color: primary,
+                                ),
                                 textCapitalization:
                                     TextCapitalization.sentences,
                                 controller: messageController,
@@ -329,10 +330,14 @@ class _ChatPageState extends State<ChatPage> {
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: const BorderSide(
-                                        width: 1, color: Colors.black),
+                                        width: 1, color: primary),
                                     borderRadius: BorderRadius.circular(100),
                                   ),
                                   hintText: 'Type a message',
+                                  hintStyle: const TextStyle(
+                                      fontSize: 12,
+                                      color: primary,
+                                      fontFamily: 'QRegular'),
                                   border: InputBorder.none,
                                 ),
                                 onChanged: (value) {
@@ -421,9 +426,7 @@ class _ChatPageState extends State<ChatPage> {
             child: TextRegular(text: 'No', fontSize: 12, color: primary),
           ),
           MaterialButton(
-            onPressed: () => Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                    builder: (context) => const MessagesScreen())),
+            onPressed: () => Navigator.of(context).pop(true),
             child: TextBold(text: 'Yes', fontSize: 14, color: Colors.black),
           ),
         ],

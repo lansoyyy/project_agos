@@ -8,6 +8,7 @@ import 'package:intl/intl.dart' show DateFormat, toBeginningOfSentenceCase;
 import '../../services/distance_calculations.dart';
 import '../../widgets/build_stars.dart';
 import '../../widgets/text_widget.dart';
+import '../pages/messages/chat_page.dart';
 
 class RecommendedStationList extends StatelessWidget {
   const RecommendedStationList(
@@ -157,6 +158,13 @@ class RecommendedStationList extends StatelessWidget {
                                       label: 'CONTACT',
                                       onPressed: () {
                                         // Navigate to chat page
+                                        Navigator.of(context)
+                                            .push(MaterialPageRoute(
+                                                builder: (context) => ChatPage(
+                                                      driverId: merchantdata.id,
+                                                      driverName:
+                                                          merchantdata['name'],
+                                                    )));
                                       },
                                     ),
                                   ),
@@ -359,7 +367,15 @@ class RecommendedStationList extends StatelessWidget {
                                         borderRadius:
                                             BorderRadius.circular(100)),
                                     color: primary,
-                                    onPressed: (() async {}),
+                                    onPressed: (() async {
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                              builder: (context) => ChatPage(
+                                                    driverId: merchantdata.id,
+                                                    driverName:
+                                                        merchantdata['name'],
+                                                  )));
+                                    }),
                                     child: const Icon(
                                       Icons.send,
                                       color: Colors.white,
