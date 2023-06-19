@@ -3,9 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 Future addOrder(username, usernumber, useraddress, userlat, userlong, stationid,
     payment, size, qty) async {
-  final docUser = FirebaseFirestore.instance
-      .collection('Orders')
-      .doc(FirebaseAuth.instance.currentUser!.uid);
+  final docUser = FirebaseFirestore.instance.collection('Orders').doc();
 
   final json = {
     'username': username,
@@ -18,7 +16,8 @@ Future addOrder(username, usernumber, useraddress, userlat, userlong, stationid,
     'qty': qty,
     'dateTime': DateTime.now(),
     'location': {'lat': userlat, 'long': userlong},
-    'status': 'Pending'
+    'status': 'Pending',
+    'userId': FirebaseAuth.instance.currentUser!.uid,
   };
 
   await docUser.set(json);
