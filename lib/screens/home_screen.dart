@@ -34,9 +34,9 @@ class _HomeScreenState extends State<HomeScreen> {
         'location': {'lat': position.latitude, 'long': position.longitude},
       });
       setState(() {
-        hasloaded = true;
         lat = position.latitude;
         long = position.longitude;
+        hasloaded = true;
       });
     }).catchError((error) {
       print('Error getting location: $error');

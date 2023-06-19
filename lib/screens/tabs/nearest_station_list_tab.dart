@@ -328,10 +328,19 @@ class NearestStationList extends StatelessWidget {
                                 children: [
                                   GestureDetector(
                                     onTap: () {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const MapScreen()));
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                              builder: (context) => MapScreen(
+                                                    merchantdata: merchantdata,
+                                                    stationLat:
+                                                        merchantdata['location']
+                                                            ['lat'],
+                                                    stationLong:
+                                                        merchantdata['location']
+                                                            ['long'],
+                                                    stationName:
+                                                        merchantdata['name'],
+                                                  )));
                                     },
                                     child: Column(
                                       crossAxisAlignment:

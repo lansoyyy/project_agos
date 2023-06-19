@@ -19,7 +19,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   final box = GetStorage();
 
-  bool accExist = false;
+  late bool accExist = false;
   @override
   void initState() {
     // TODO: implement initState
