@@ -1,3 +1,4 @@
+import 'package:agos/screens/auth/login_screen.dart';
 import 'package:agos/screens/merchant/home_screen.dart';
 import 'package:agos/screens/merchant/signup_screen.dart';
 import 'package:agos/widgets/button_widget.dart';
@@ -280,6 +281,22 @@ class _MerchantLoginScreenState extends State<MerchantLoginScreen> {
                             builder: (context) =>
                                 const MerchantSignupScreen()));
                       },
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Center(
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const LoginScreen()));
+                      },
+                      child: TextBold(
+                        text: 'Continue as Customer',
+                        fontSize: 15,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                   const SizedBox(
