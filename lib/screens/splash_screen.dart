@@ -24,6 +24,15 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    FirebaseFirestore.instance
+        .collection('Users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get()
+        .then((DocumentSnapshot querySnapshot) async {
+      setState(() {
+        accExist = querySnapshot.exists;
+      });
+    });
 
     Timer(const Duration(seconds: 5), () async {
       Navigator.of(context).pushReplacement(MaterialPageRoute(
@@ -31,15 +40,7 @@ class _SplashScreenState extends State<SplashScreen> {
             stream: FirebaseAuth.instance.authStateChanges(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                FirebaseFirestore.instance
-                    .collection('Users')
-                    .doc(snapshot.data!.uid)
-                    .get()
-                    .then((DocumentSnapshot querySnapshot) async {
-                  setState(() {
-                    accExist = querySnapshot.exists;
-                  });
-                });
+                print(accExist);
                 return accExist ? const HomeScreen() : const LoginScreen();
               } else {
                 return const LoginScreen();
