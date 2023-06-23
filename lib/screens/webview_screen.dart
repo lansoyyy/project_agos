@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:agos/screens/pages/messages/chat_page.dart';
+import 'package:agos/screens/pages/messages/messages_screen.dart';
 import 'package:agos/widgets/text_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -404,6 +405,17 @@ class MapviewScreenState extends State<MapviewScreen> {
               : const SizedBox(),
           const SizedBox(
             height: 10,
+          ),
+          FloatingActionButton(
+            backgroundColor: primary,
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const MessagesScreen()));
+            },
+            child: const Icon(
+              Icons.send,
+              color: Colors.white,
+            ),
           ),
         ],
       ),

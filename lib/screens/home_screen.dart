@@ -65,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 builder: (context) => const MessagesScreen()));
           },
           child: const Icon(
-            Icons.message,
+            Icons.send,
             color: Colors.white,
           ),
         ),
