@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:agos/screens/home_screen.dart';
+import 'package:agos/screens/merchant/home_screen.dart';
 import 'package:agos/utils/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -20,19 +21,36 @@ class _SplashScreenState extends State<SplashScreen> {
   final box = GetStorage();
 
   late bool accExist = false;
+  String usertype = '';
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    FirebaseFirestore.instance
-        .collection('Users')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .get()
-        .then((DocumentSnapshot querySnapshot) async {
-      setState(() {
-        accExist = querySnapshot.exists;
+    if (FirebaseAuth.instance.currentUser?.uid != null) {
+      FirebaseFirestore.instance
+          .collection('Users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .get()
+          .then((DocumentSnapshot querySnapshot) async {
+        setState(() {
+          accExist = querySnapshot.exists;
+          usertype = 'User';
+        });
       });
-    });
+
+      if (accExist == false) {
+        FirebaseFirestore.instance
+            .collection('Merchant')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .get()
+            .then((DocumentSnapshot querySnapshot) async {
+          setState(() {
+            accExist = querySnapshot.exists;
+            usertype = 'Merchant';
+          });
+        });
+      }
+    }
 
     Timer(const Duration(seconds: 5), () async {
       Navigator.of(context).pushReplacement(MaterialPageRoute(
@@ -40,8 +58,11 @@ class _SplashScreenState extends State<SplashScreen> {
             stream: FirebaseAuth.instance.authStateChanges(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                print(accExist);
-                return accExist ? const HomeScreen() : const LoginScreen();
+                return accExist
+                    ? usertype == 'User'
+                        ? const HomeScreen()
+                        : const MerchantHomeScreen()
+                    : const LoginScreen();
               } else {
                 return const LoginScreen();
               }
