@@ -13,6 +13,7 @@ import '../../utils/keys.dart';
 import '../../widgets/button_widget.dart';
 import '../../widgets/order_modal_widget.dart';
 import '../../widgets/text_widget.dart';
+import 'messages/chat_page.dart';
 
 class MapScreen extends StatefulWidget {
   final String stationName;
@@ -78,21 +79,183 @@ class MapScreenState extends State<MapScreen> {
       appBar: AppbarWidget(widget.stationName),
       backgroundColor: Colors.white,
       body: hasloaded
-          ? GoogleMap(
-              polylines: {_poly},
-              mapToolbarEnabled: false,
-              zoomControlsEnabled: false,
-              buildingsEnabled: true,
-              compassEnabled: true,
-              markers: markers,
-              myLocationButtonEnabled: true,
-              myLocationEnabled: true,
-              mapType: MapType.normal,
-              initialCameraPosition: kGooglePlex,
-              onMapCreated: (GoogleMapController controller) {
-                mapController = controller;
-                _controller.complete(controller);
-              },
+          ? Stack(
+              children: [
+                GoogleMap(
+                  polylines: {_poly},
+                  mapToolbarEnabled: false,
+                  zoomControlsEnabled: false,
+                  buildingsEnabled: true,
+                  compassEnabled: true,
+                  markers: markers,
+                  myLocationButtonEnabled: true,
+                  myLocationEnabled: true,
+                  mapType: MapType.normal,
+                  initialCameraPosition: kGooglePlex,
+                  onMapCreated: (GoogleMapController controller) {
+                    mapController = controller;
+                    _controller.complete(controller);
+                  },
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 20),
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: ButtonWidget(
+                        radius: 100,
+                        label: 'Order now',
+                        labelColor: Colors.white,
+                        onPressed: () {
+                          showModalBottomSheet(
+                              enableDrag: true,
+                              context: context,
+                              builder: (context) {
+                                return SizedBox(
+                                  height: 500,
+                                  child: Padding(
+                                    padding: const EdgeInsets.fromLTRB(
+                                        20, 10, 20, 10),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Align(
+                                          alignment: Alignment.topRight,
+                                          child: IconButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            icon: const Icon(
+                                              Icons.close,
+                                              color: Colors.red,
+                                            ),
+                                          ),
+                                        ),
+                                        TextBold(
+                                          text: widget.merchantdata['name'],
+                                          fontSize: 24,
+                                          color: Colors.black,
+                                        ),
+                                        const Divider(
+                                          color: primary,
+                                        ),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            const Icon(
+                                              Icons.location_on,
+                                              color: primary,
+                                            ),
+                                            const SizedBox(
+                                              width: 5,
+                                            ),
+                                            TextRegular(
+                                              text: widget
+                                                  .merchantdata['address'],
+                                              fontSize: 14,
+                                              color: Colors.black,
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            const Icon(
+                                              Icons.phone,
+                                              color: primary,
+                                            ),
+                                            const SizedBox(
+                                              width: 5,
+                                            ),
+                                            TextRegular(
+                                              text:
+                                                  widget.merchantdata['number'],
+                                              fontSize: 14,
+                                              color: Colors.black,
+                                            ),
+                                          ],
+                                        ),
+                                        const Divider(
+                                          color: primary,
+                                        ),
+                                        const SizedBox(
+                                          height: 30,
+                                        ),
+                                        Center(
+                                          child: ButtonWidget(
+                                            radius: 100,
+                                            labelColor: Colors.white,
+                                            color: secondary,
+                                            label: 'CONTACT',
+                                            onPressed: () {
+                                              // Navigate to chat page
+                                              Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder:
+                                                          (context) => ChatPage(
+                                                                driverId: widget
+                                                                    .merchantdata
+                                                                    .id,
+                                                                driverName:
+                                                                    widget.merchantdata[
+                                                                        'name'],
+                                                              )));
+                                            },
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 20,
+                                        ),
+                                        Center(
+                                          child: ButtonWidget(
+                                            radius: 100,
+                                            labelColor: Colors.white,
+                                            color: primary,
+                                            label: 'ORDER',
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                              showModalBottomSheet(
+                                                  isScrollControlled: true,
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return OrderModalWidget(
+                                                      price:
+                                                          widget.merchantdata[
+                                                              'price'],
+                                                      myLat: lat,
+                                                      myLong: long,
+                                                      stationid: widget
+                                                          .merchantdata.id,
+                                                      address:
+                                                          widget.merchantdata[
+                                                              'address'],
+                                                      name: widget
+                                                          .merchantdata['name'],
+                                                      number:
+                                                          widget.merchantdata[
+                                                              'number'],
+                                                    );
+                                                  });
+                                            },
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              });
+                        }),
+                  ),
+                ),
+              ],
             )
           : const SpinKitPulse(
               color: primary,
@@ -103,133 +266,137 @@ class MapScreenState extends State<MapScreen> {
   addMarker() async {
     markers.add(
       Marker(
+        onTap: () {
+          showModalBottomSheet(
+              enableDrag: true,
+              context: context,
+              builder: (context) {
+                return SizedBox(
+                  height: 500,
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Align(
+                          alignment: Alignment.topRight,
+                          child: IconButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            icon: const Icon(
+                              Icons.close,
+                              color: Colors.red,
+                            ),
+                          ),
+                        ),
+                        TextBold(
+                          text: widget.merchantdata['name'],
+                          fontSize: 24,
+                          color: Colors.black,
+                        ),
+                        const Divider(
+                          color: primary,
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const Icon(
+                              Icons.location_on,
+                              color: primary,
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            TextRegular(
+                              text: widget.merchantdata['address'],
+                              fontSize: 14,
+                              color: Colors.black,
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const Icon(
+                              Icons.phone,
+                              color: primary,
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            TextRegular(
+                              text: widget.merchantdata['number'],
+                              fontSize: 14,
+                              color: Colors.black,
+                            ),
+                          ],
+                        ),
+                        const Divider(
+                          color: primary,
+                        ),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        Center(
+                          child: ButtonWidget(
+                            radius: 100,
+                            labelColor: Colors.white,
+                            color: secondary,
+                            label: 'CONTACT',
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => ChatPage(
+                                      driverId: widget.merchantdata.id,
+                                      driverName:
+                                          widget.merchantdata['name'])));
+                            },
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Center(
+                          child: ButtonWidget(
+                            radius: 100,
+                            labelColor: Colors.white,
+                            color: primary,
+                            label: 'ORDER',
+                            onPressed: () {
+                              Navigator.pop(context);
+                              showModalBottomSheet(
+                                  isScrollControlled: true,
+                                  context: context,
+                                  builder: (context) {
+                                    return OrderModalWidget(
+                                      price: widget.merchantdata['price'],
+                                      myLat: lat,
+                                      myLong: long,
+                                      stationid: widget.merchantdata.id,
+                                      address: widget.merchantdata['address'],
+                                      name: widget.merchantdata['name'],
+                                      number: widget.merchantdata['number'],
+                                    );
+                                  });
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              });
+        },
         icon: BitmapDescriptor.defaultMarker,
         markerId: MarkerId(widget.stationName),
         position: LatLng(widget.stationLat, widget.stationLong),
         infoWindow: InfoWindow(
-          onTap: () {
-            showModalBottomSheet(
-                enableDrag: true,
-                context: context,
-                builder: (context) {
-                  return SizedBox(
-                    height: 500,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Align(
-                            alignment: Alignment.topRight,
-                            child: IconButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              icon: const Icon(
-                                Icons.close,
-                                color: Colors.red,
-                              ),
-                            ),
-                          ),
-                          TextBold(
-                            text: widget.merchantdata['name'],
-                            fontSize: 24,
-                            color: Colors.black,
-                          ),
-                          const Divider(
-                            color: primary,
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              const Icon(
-                                Icons.location_on,
-                                color: primary,
-                              ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              TextRegular(
-                                text: widget.merchantdata['address'],
-                                fontSize: 14,
-                                color: Colors.black,
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              const Icon(
-                                Icons.phone,
-                                color: primary,
-                              ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              TextRegular(
-                                text: widget.merchantdata['number'],
-                                fontSize: 14,
-                                color: Colors.black,
-                              ),
-                            ],
-                          ),
-                          const Divider(
-                            color: primary,
-                          ),
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          Center(
-                            child: ButtonWidget(
-                              radius: 100,
-                              labelColor: Colors.white,
-                              color: secondary,
-                              label: 'CONTACT',
-                              onPressed: () {
-                                // Navigate to chat page
-                              },
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Center(
-                            child: ButtonWidget(
-                              radius: 100,
-                              labelColor: Colors.white,
-                              color: primary,
-                              label: 'ORDER',
-                              onPressed: () {
-                                Navigator.pop(context);
-                                showModalBottomSheet(
-                                    isScrollControlled: true,
-                                    context: context,
-                                    builder: (context) {
-                                      return OrderModalWidget(
-                                        price: widget.merchantdata['price'],
-                                        myLat: lat,
-                                        myLong: long,
-                                        stationid: widget.merchantdata.id,
-                                        address: widget.merchantdata['address'],
-                                        name: widget.merchantdata['name'],
-                                        number: widget.merchantdata['number'],
-                                      );
-                                    });
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                });
-          },
           title: widget.stationName,
         ),
       ),

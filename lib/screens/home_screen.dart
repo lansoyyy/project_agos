@@ -1,4 +1,5 @@
 import 'package:agos/screens/pages/history_screen.dart';
+import 'package:agos/screens/pages/messages/messages_screen.dart';
 import 'package:agos/screens/tabs/mostrated_list.dart';
 import 'package:agos/screens/tabs/nearest_station_list_tab.dart';
 import 'package:agos/screens/tabs/recommended_list.dart';
@@ -57,6 +58,17 @@ class _HomeScreenState extends State<HomeScreen> {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: primary,
+          onPressed: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => const MessagesScreen()));
+          },
+          child: const Icon(
+            Icons.message,
+            color: Colors.white,
+          ),
+        ),
         drawerEnableOpenDragGesture: false,
         drawer: const DrawerWidget(),
         backgroundColor: Colors.white,
@@ -91,10 +103,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               IconButton(
                                 onPressed: () {
-                                  Navigator.of(context).pushReplacement(
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const MapviewScreen()));
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) =>
+                                          const MapviewScreen()));
                                 },
                                 icon: const Icon(
                                   Icons.travel_explore_rounded,
