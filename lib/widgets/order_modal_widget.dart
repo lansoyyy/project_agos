@@ -51,6 +51,8 @@ class _OrderModalWidgetState extends State<OrderModalWidget> {
         myName = querySnapshot['name'];
         myNumber = querySnapshot['number'];
         myAddress = querySnapshot['address'];
+        myprofile = querySnapshot['profilePicture'];
+
         hasLoaded = true;
       });
     });
@@ -66,6 +68,7 @@ class _OrderModalWidgetState extends State<OrderModalWidget> {
   String myName = '';
   String myNumber = '';
   String myAddress = '';
+  String myprofile = '';
   int qty = 1;
 
   @override
@@ -338,7 +341,8 @@ class _OrderModalWidgetState extends State<OrderModalWidget> {
                                                 double.parse(widget.price) *
                                                     qty,
                                                 type,
-                                                qty);
+                                                qty,
+                                                myprofile);
 
                                             showDialog(
                                                 context: context,

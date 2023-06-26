@@ -9,6 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:intl/intl.dart' show DateFormat, toBeginningOfSentenceCase;
 
 class MerchantHomeScreen extends StatefulWidget {
   const MerchantHomeScreen({super.key});
@@ -223,13 +224,57 @@ class _MerchantHomeScreenState extends State<MerchantHomeScreen> {
                         ],
                       ),
                     ),
-                    const Expanded(
+                    Expanded(
                       child: SizedBox(
                         child: TabBarView(
                           children: [
-                            OrderList(),
-                            OrderList(),
-                            OrderList(),
+                            TodayList(
+                              filter: filter,
+                              query: FirebaseFirestore.instance
+                                  .collection('Orders')
+                                  .where('stationid',
+                                      isEqualTo: FirebaseAuth
+                                          .instance.currentUser!.uid)
+                                  .where('username',
+                                      isGreaterThanOrEqualTo:
+                                          toBeginningOfSentenceCase(filter))
+                                  .where('username',
+                                      isLessThan:
+                                          '${toBeginningOfSentenceCase(filter)}z')
+                                  .where('status', isEqualTo: 'Pending')
+                                  .snapshots(),
+                            ),
+                            TodayList(
+                              filter: filter,
+                              query: FirebaseFirestore.instance
+                                  .collection('Orders')
+                                  .where('stationid',
+                                      isEqualTo: FirebaseAuth
+                                          .instance.currentUser!.uid)
+                                  .where('username',
+                                      isGreaterThanOrEqualTo:
+                                          toBeginningOfSentenceCase(filter))
+                                  .where('username',
+                                      isLessThan:
+                                          '${toBeginningOfSentenceCase(filter)}z')
+                                  .snapshots(),
+                            ),
+                            TodayList(
+                              filter: filter,
+                              query: FirebaseFirestore.instance
+                                  .collection('Orders')
+                                  .where('stationid',
+                                      isEqualTo: FirebaseAuth
+                                          .instance.currentUser!.uid)
+                                  .where('status', isEqualTo: 'Completed')
+                                  .where('username',
+                                      isGreaterThanOrEqualTo:
+                                          toBeginningOfSentenceCase(filter))
+                                  .where('username',
+                                      isLessThan:
+                                          '${toBeginningOfSentenceCase(filter)}z')
+                                  .snapshots(),
+                            ),
                           ],
                         ),
                       ),
