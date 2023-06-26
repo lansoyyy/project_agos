@@ -4,10 +4,11 @@ import 'package:agos/screens/pages/messages/chat_page.dart';
 import 'package:agos/screens/pages/messages/messages_screen.dart';
 import 'package:agos/widgets/text_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
+import 'package:badges/badges.dart' as b;
 import '../plugin/location.dart';
 import '../utils/colors.dart';
 import '../widgets/button_widget.dart';
@@ -406,17 +407,47 @@ class MapviewScreenState extends State<MapviewScreen> {
           const SizedBox(
             height: 10,
           ),
-          FloatingActionButton(
-            backgroundColor: primary,
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const MessagesScreen()));
-            },
-            child: const Icon(
-              Icons.send,
-              color: Colors.white,
-            ),
-          ),
+          StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection('Messages')
+                  .where('userId',
+                      isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+                  .where('seen', isEqualTo: false)
+                  .snapshots(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.hasError) {
+                  print('error');
+                  return const Center(child: Text('Error'));
+                }
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const SizedBox();
+                }
+
+                final data = snapshot.requireData;
+                return b.Badge(
+                  showBadge: data.docs.isNotEmpty,
+                  badgeAnimation: const b.BadgeAnimation.fade(),
+                  badgeStyle: const b.BadgeStyle(
+                    badgeColor: Colors.red,
+                  ),
+                  badgeContent: TextRegular(
+                      text: data.docs.length.toString(),
+                      fontSize: 12,
+                      color: Colors.white),
+                  child: FloatingActionButton(
+                    backgroundColor: primary,
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const MessagesScreen()));
+                    },
+                    child: const Icon(
+                      Icons.send,
+                      color: Colors.white,
+                    ),
+                  ),
+                );
+              }),
         ],
       ),
     );
