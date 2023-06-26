@@ -243,7 +243,16 @@ class TodayList extends StatelessWidget {
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                const MerchantMapScreen()));
+                                                MerchantMapScreen(
+                                                  merchantdata:
+                                                      data.docs[index],
+                                                  stationLat: data.docs[index]
+                                                      ['location']['lat'],
+                                                  stationLong: data.docs[index]
+                                                      ['location']['long'],
+                                                  stationName: data.docs[index]
+                                                      ['username'],
+                                                )));
                                   },
                                   child: Column(
                                     crossAxisAlignment:
