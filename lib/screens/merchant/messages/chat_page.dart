@@ -81,7 +81,7 @@ class _MerchantChatPageState extends State<MerchantChatPage> {
   Widget build(BuildContext context) {
     final Stream<DocumentSnapshot> chatData = FirebaseFirestore.instance
         .collection('Messages')
-        .doc(FirebaseAuth.instance.currentUser!.uid + widget.driverId)
+        .doc(widget.driverId + FirebaseAuth.instance.currentUser!.uid)
         .snapshots();
 
     return WillPopScope(
@@ -360,9 +360,9 @@ class _MerchantChatPageState extends State<MerchantChatPage> {
                                   try {
                                     await FirebaseFirestore.instance
                                         .collection('Messages')
-                                        .doc(FirebaseAuth
-                                                .instance.currentUser!.uid +
-                                            widget.driverId)
+                                        .doc(widget.driverId +
+                                            FirebaseAuth
+                                                .instance.currentUser!.uid)
                                         .update({
                                       'lastMessage': messageController.text,
                                       'dateTime': DateTime.now(),

@@ -1,6 +1,6 @@
 import 'package:agos/screens/merchant/messages/chat_page.dart';
 import 'package:agos/widgets/appbar_widget.dart';
-import 'package:agos/widgets/drawer_widget.dart';
+import 'package:agos/widgets/merchant_drawer_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +22,7 @@ class _MerchantMessagesScreenState extends State<MerchantMessagesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const DrawerWidget(),
+      drawer: const MerchantDrawerWidget(),
       appBar: AppbarWidget('MESSAGES'),
       body: Column(
         children: [
@@ -100,7 +100,7 @@ class _MerchantMessagesScreenState extends State<MerchantMessagesScreen> {
                       .snapshots()
                   : FirebaseFirestore.instance
                       .collection('Messages')
-                      .where('userId',
+                      .where('driverId',
                           isEqualTo: FirebaseAuth.instance.currentUser!.uid)
                       .orderBy('dateTime')
                       .snapshots(),
@@ -131,6 +131,25 @@ class _MerchantMessagesScreenState extends State<MerchantMessagesScreen> {
                         );
                       },
                       itemBuilder: (context, index) {
+                        final dateTime =
+                            (data.docs[index]['dateTime'] as Timestamp)
+                                .toDate();
+                        final now = DateTime.now();
+                        final difference = now.difference(dateTime);
+
+                        String timeAgo;
+
+                        if (difference.inMinutes < 60) {
+                          timeAgo = '${difference.inMinutes} minutes ago';
+                        } else if (difference.inHours < 24) {
+                          timeAgo = '${difference.inHours} hours ago';
+                        } else if (difference.inDays < 30) {
+                          final days = difference.inDays;
+                          timeAgo = '$days day${days > 1 ? 's' : ''} ago';
+                        } else {
+                          final months = difference.inDays ~/ 30;
+                          timeAgo = '$months month${months > 1 ? 's' : ''} ago';
+                        }
                         return Padding(
                           padding: const EdgeInsets.only(
                               left: 20, right: 20, top: 5, bottom: 5),
@@ -142,9 +161,9 @@ class _MerchantMessagesScreenState extends State<MerchantMessagesScreen> {
                                   .update({'seen': true});
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => MerchantChatPage(
-                                        driverId: data.docs[index]['driverId'],
+                                        driverId: data.docs[index]['userId'],
                                         driverName: data.docs[index]
-                                            ['driverName'],
+                                            ['userName'],
                                       )));
                             },
                             child: Row(
@@ -158,7 +177,7 @@ class _MerchantMessagesScreenState extends State<MerchantMessagesScreen> {
                                     shape: BoxShape.circle,
                                     image: DecorationImage(
                                       image: NetworkImage(
-                                        data.docs[index]['driverProfile'],
+                                        data.docs[index]['userProfile'],
                                       ),
                                       fit: BoxFit.cover,
                                     ),
@@ -182,12 +201,12 @@ class _MerchantMessagesScreenState extends State<MerchantMessagesScreen> {
                                           data.docs[index]['seen'] == true
                                               ? TextRegular(
                                                   text: data.docs[index]
-                                                      ['driverName'],
+                                                      ['userName'],
                                                   fontSize: 15,
                                                   color: primary)
                                               : TextBold(
                                                   text: data.docs[index]
-                                                      ['driverName'],
+                                                      ['userName'],
                                                   fontSize: 15,
                                                   color: Colors.black),
                                           SizedBox(
@@ -247,7 +266,7 @@ class _MerchantMessagesScreenState extends State<MerchantMessagesScreen> {
                                                   MainAxisAlignment.end,
                                               children: [
                                                 TextBold(
-                                                  text: '3 minutes ago',
+                                                  text: timeAgo,
                                                   fontSize: 16,
                                                   color: primary,
                                                 ),
@@ -257,7 +276,14 @@ class _MerchantMessagesScreenState extends State<MerchantMessagesScreen> {
                                                   ),
                                                 ),
                                                 IconButton(
-                                                  onPressed: () {},
+                                                  onPressed: () async {
+                                                    await FirebaseFirestore
+                                                        .instance
+                                                        .collection('Messages')
+                                                        .doc(
+                                                            data.docs[index].id)
+                                                        .delete();
+                                                  },
                                                   icon: const Icon(
                                                     Icons.delete,
                                                     color: primary,

@@ -257,7 +257,14 @@ class _MessagesScreenState extends State<MessagesScreen> {
                                                   ),
                                                 ),
                                                 IconButton(
-                                                  onPressed: () {},
+                                                  onPressed: () async {
+                                                    await FirebaseFirestore
+                                                        .instance
+                                                        .collection('Messages')
+                                                        .doc(
+                                                            data.docs[index].id)
+                                                        .delete();
+                                                  },
                                                   icon: const Icon(
                                                     Icons.delete,
                                                     color: primary,

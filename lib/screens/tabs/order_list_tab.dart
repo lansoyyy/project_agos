@@ -1,4 +1,5 @@
 import 'package:agos/screens/merchant/map_page.dart';
+import 'package:agos/screens/merchant/messages/chat_page.dart';
 import 'package:agos/utils/colors.dart';
 import 'package:agos/widgets/button_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -282,7 +283,17 @@ class TodayList extends StatelessWidget {
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(100)),
                                   color: primary,
-                                  onPressed: (() async {}),
+                                  onPressed: (() async {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                MerchantChatPage(
+                                                  driverId: data.docs[index]
+                                                      ['userId'],
+                                                  driverName: data.docs[index]
+                                                      ['username'],
+                                                )));
+                                  }),
                                   child: const Icon(
                                     Icons.send,
                                     color: Colors.white,
