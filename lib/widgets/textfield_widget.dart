@@ -87,9 +87,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
             ),
             borderRadius: BorderRadius.circular(5),
           ),
-          errorStyle: const TextStyle(
-            fontFamily: 'QBold',
-          ),
+          errorStyle: const TextStyle(fontFamily: 'QBold', fontSize: 12),
           focusedErrorBorder: OutlineInputBorder(
             borderSide: const BorderSide(
               color: Colors.red,

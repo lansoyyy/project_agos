@@ -42,6 +42,7 @@ class _MerchantSignupScreenState extends State<MerchantSignupScreen> {
   final contactnumberController = TextEditingController();
 
   final businesshoursController = TextEditingController();
+  final confirmpasswordController = TextEditingController();
 
   final priceController = TextEditingController();
 
@@ -327,12 +328,32 @@ class _MerchantSignupScreenState extends State<MerchantSignupScreen> {
                       if (value.length < 8) {
                         return 'Password must be at least 8 characters long';
                       }
-                      final hasUppercase = value.contains(RegExp(r'[A-Z]'));
-                      final hasLowercase = value.contains(RegExp(r'[a-z]'));
-                      final hasNumber = value.contains(RegExp(r'[0-9]'));
-                      if (!hasUppercase || !hasLowercase || !hasNumber) {
-                        return 'Password must contain at least one uppercase letter, one lowercase letter, and one number';
+
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  TextFieldWidget(
+                    textCapitalization: TextCapitalization.none,
+                    showEye: true,
+                    isObscure: true,
+                    icon: Icons.lock,
+                    hint: 'Confirm Password',
+                    label: 'Confirm Password',
+                    controller: confirmpasswordController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter a password';
                       }
+                      if (value.length < 8) {
+                        return 'Password must be at least 8 characters long';
+                      }
+                      if (value != passwordController.text) {
+                        return 'Password do not match';
+                      }
+
                       return null;
                     },
                   ),
