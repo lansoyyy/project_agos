@@ -12,7 +12,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:geolocator/geolocator.dart';
-
+import 'package:badges/badges.dart' as b;
 import '../plugin/location.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -58,17 +58,47 @@ class _HomeScreenState extends State<HomeScreen> {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: primary,
-          onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const MessagesScreen()));
-          },
-          child: const Icon(
-            Icons.send,
-            color: Colors.white,
-          ),
-        ),
+        floatingActionButton: StreamBuilder<QuerySnapshot>(
+            stream: FirebaseFirestore.instance
+                .collection('Messages')
+                .where('userId',
+                    isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+                .where('seen', isEqualTo: false)
+                .snapshots(),
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (snapshot.hasError) {
+                print('error');
+                return const Center(child: Text('Error'));
+              }
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const SizedBox();
+              }
+
+              final data = snapshot.requireData;
+              return b.Badge(
+                showBadge: data.docs.isNotEmpty,
+                badgeAnimation: const b.BadgeAnimation.fade(),
+                badgeStyle: const b.BadgeStyle(
+                  badgeColor: Colors.red,
+                ),
+                badgeContent: TextRegular(
+                    text: data.docs.length.toString(),
+                    fontSize: 12,
+                    color: Colors.white),
+                child: FloatingActionButton(
+                  backgroundColor: primary,
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const MessagesScreen()));
+                  },
+                  child: const Icon(
+                    Icons.send,
+                    color: Colors.white,
+                  ),
+                ),
+              );
+            }),
         drawerEnableOpenDragGesture: false,
         drawer: const DrawerWidget(),
         backgroundColor: Colors.white,

@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart' show DateFormat, toBeginningOfSentenceCase;
+import 'package:badges/badges.dart' as b;
 
 class MerchantHomeScreen extends StatefulWidget {
   const MerchantHomeScreen({super.key});
@@ -161,25 +162,60 @@ class _MerchantHomeScreenState extends State<MerchantHomeScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  MaterialButton(
-                                    elevation: 2,
-                                    minWidth: 60,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(100)),
-                                    color: primary,
-                                    onPressed: (() {
-                                      Navigator.of(context).pushReplacement(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const MerchantMessagesScreen()));
-                                    }),
-                                    child: const Icon(
-                                      Icons.send,
-                                      color: Colors.white,
-                                      size: 14,
-                                    ),
-                                  ),
+                                  StreamBuilder<QuerySnapshot>(
+                                      stream: FirebaseFirestore.instance
+                                          .collection('Messages')
+                                          .where('userId',
+                                              isEqualTo: FirebaseAuth
+                                                  .instance.currentUser!.uid)
+                                          .where('seen', isEqualTo: false)
+                                          .snapshots(),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<QuerySnapshot>
+                                              snapshot) {
+                                        if (snapshot.hasError) {
+                                          print('error');
+                                          return const Center(
+                                              child: Text('Error'));
+                                        }
+                                        if (snapshot.connectionState ==
+                                            ConnectionState.waiting) {
+                                          return const SizedBox();
+                                        }
+
+                                        final data = snapshot.requireData;
+                                        return b.Badge(
+                                          showBadge: data.docs.isNotEmpty,
+                                          badgeAnimation:
+                                              const b.BadgeAnimation.fade(),
+                                          badgeStyle: const b.BadgeStyle(
+                                            badgeColor: Colors.red,
+                                          ),
+                                          badgeContent: TextRegular(
+                                              text: data.docs.length.toString(),
+                                              fontSize: 12,
+                                              color: Colors.white),
+                                          child: MaterialButton(
+                                            elevation: 2,
+                                            minWidth: 60,
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(100)),
+                                            color: primary,
+                                            onPressed: (() {
+                                              Navigator.of(context).pushReplacement(
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const MerchantMessagesScreen()));
+                                            }),
+                                            child: const Icon(
+                                              Icons.send,
+                                              color: Colors.white,
+                                              size: 14,
+                                            ),
+                                          ),
+                                        );
+                                      }),
                                   TextBold(
                                     text: 'Messages',
                                     fontSize: 12,
