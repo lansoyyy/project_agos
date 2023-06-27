@@ -61,6 +61,8 @@ class _HomeScreenState extends State<HomeScreen> {
         floatingActionButton: StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance
                 .collection('Messages')
+                .where('lastId',
+                    isNotEqualTo: FirebaseAuth.instance.currentUser!.uid)
                 .where('userId',
                     isEqualTo: FirebaseAuth.instance.currentUser!.uid)
                 .where('seen', isEqualTo: false)

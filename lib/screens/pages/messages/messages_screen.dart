@@ -92,10 +92,10 @@ class _MessagesScreenState extends State<MessagesScreen> {
                       .collection('Messages')
                       .where('userId',
                           isEqualTo: FirebaseAuth.instance.currentUser!.uid)
-                      .where('name',
+                      .where('driverName',
                           isGreaterThanOrEqualTo:
                               toBeginningOfSentenceCase(filter))
-                      .where('name',
+                      .where('driverName',
                           isLessThan: '${toBeginningOfSentenceCase(filter)}z')
                       .snapshots()
                   : FirebaseFirestore.instance
@@ -121,6 +121,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
                 }
 
                 final data = snapshot.requireData;
+
                 return Expanded(
                   child: SizedBox(
                     child: ListView.separated(
@@ -131,6 +132,25 @@ class _MessagesScreenState extends State<MessagesScreen> {
                         );
                       },
                       itemBuilder: (context, index) {
+                        final dateTime =
+                            (data.docs[index]['dateTime'] as Timestamp)
+                                .toDate();
+                        final now = DateTime.now();
+                        final difference = now.difference(dateTime);
+
+                        String timeAgo;
+
+                        if (difference.inMinutes < 60) {
+                          timeAgo = '${difference.inMinutes} minutes ago';
+                        } else if (difference.inHours < 24) {
+                          timeAgo = '${difference.inHours} hours ago';
+                        } else if (difference.inDays < 30) {
+                          final days = difference.inDays;
+                          timeAgo = '$days day${days > 1 ? 's' : ''} ago';
+                        } else {
+                          final months = difference.inDays ~/ 30;
+                          timeAgo = '$months month${months > 1 ? 's' : ''} ago';
+                        }
                         return Padding(
                           padding: const EdgeInsets.only(
                               left: 20, right: 20, top: 5, bottom: 5),
@@ -140,6 +160,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
                                   .collection('Messages')
                                   .doc(data.docs[index].id)
                                   .update({'seen': true});
+
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => ChatPage(
                                         driverId: data.docs[index]['driverId'],
@@ -179,7 +200,10 @@ class _MessagesScreenState extends State<MessagesScreen> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
                                         children: [
-                                          data.docs[index]['seen'] == true
+                                          data.docs[index]['seen'] == true &&
+                                                  data.docs[index]['lastId'] ==
+                                                      FirebaseAuth.instance
+                                                          .currentUser!.uid
                                               ? TextRegular(
                                                   text: data.docs[index]
                                                       ['driverName'],
@@ -193,7 +217,11 @@ class _MessagesScreenState extends State<MessagesScreen> {
                                           SizedBox(
                                             width: 180,
                                             child: data.docs[index]['seen'] ==
-                                                    true
+                                                        true &&
+                                                    data.docs[index]
+                                                            ['lastId'] ==
+                                                        FirebaseAuth.instance
+                                                            .currentUser!.uid
                                                 ? Text(
                                                     data.docs[index][
                                                                     'lastMessage']
@@ -247,7 +275,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
                                                   MainAxisAlignment.end,
                                               children: [
                                                 TextBold(
-                                                  text: '3 minutes ago',
+                                                  text: timeAgo,
                                                   fontSize: 16,
                                                   color: primary,
                                                 ),

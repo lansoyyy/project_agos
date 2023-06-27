@@ -23,7 +23,8 @@ Future addMessage(
     'driverName': driverName,
     'userName': userName,
     'driverProfile': driverProfile,
-    'userProfile': userProfile
+    'userProfile': userProfile,
+    'lastId': FirebaseAuth.instance.currentUser!.uid,
   };
 
   await docUser.set(json);

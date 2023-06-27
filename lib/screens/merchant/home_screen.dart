@@ -165,7 +165,10 @@ class _MerchantHomeScreenState extends State<MerchantHomeScreen> {
                                   StreamBuilder<QuerySnapshot>(
                                       stream: FirebaseFirestore.instance
                                           .collection('Messages')
-                                          .where('userId',
+                                          .where('lastId',
+                                              isNotEqualTo: FirebaseAuth
+                                                  .instance.currentUser!.uid)
+                                          .where('driverId',
                                               isEqualTo: FirebaseAuth
                                                   .instance.currentUser!.uid)
                                           .where('seen', isEqualTo: false)

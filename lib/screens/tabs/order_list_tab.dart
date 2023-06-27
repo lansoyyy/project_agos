@@ -207,7 +207,7 @@ class TodayList extends StatelessWidget {
                               ),
                               TextRegular(
                                 text:
-                                    'Total: ₱${data.docs[index]['payment']}.00',
+                                    'Total: ₱${data.docs[index]['payment'].toInt()}.00',
                                 fontSize: 15,
                                 color: primary,
                               ),

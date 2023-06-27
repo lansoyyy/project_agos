@@ -364,6 +364,8 @@ class _ChatPageState extends State<ChatPage> {
                                                 .instance.currentUser!.uid +
                                             widget.driverId)
                                         .update({
+                                      'lastId': FirebaseAuth
+                                          .instance.currentUser!.uid,
                                       'lastMessage': messageController.text,
                                       'dateTime': DateTime.now(),
                                       'seen': false,

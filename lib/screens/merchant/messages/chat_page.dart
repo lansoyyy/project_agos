@@ -364,6 +364,8 @@ class _MerchantChatPageState extends State<MerchantChatPage> {
                                             FirebaseAuth
                                                 .instance.currentUser!.uid)
                                         .update({
+                                      'lastId': FirebaseAuth
+                                          .instance.currentUser!.uid,
                                       'lastMessage': messageController.text,
                                       'dateTime': DateTime.now(),
                                       'seen': false,
