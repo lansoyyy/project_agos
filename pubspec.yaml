@@ -55,7 +55,8 @@ dependencies:
   avatar_glow:
   flutter_inapp_notifications:
   ticket_widget:
-  intl: ^0.18.1
+  intl:
+  syncfusion_flutter_charts: ^19.1.54
 
 dev_dependencies:
   flutter_test:

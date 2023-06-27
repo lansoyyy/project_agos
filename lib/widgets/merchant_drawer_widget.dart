@@ -13,6 +13,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../screens/merchant/pages/reports_page.dart';
+
 class DrawerwIDGET extends StatefulWidget {
   final GlobalKey? key6;
 
@@ -383,17 +385,19 @@ class _DrawerwIDGETState extends State<DrawerwIDGET> {
                           ),
                           ListTile(
                             leading: const Icon(
-                              Icons.attach_money_rounded,
+                              Icons.stacked_line_chart_sharp,
                               color: primary,
                             ),
                             title: TextRegular(
-                              text: 'Earnings',
+                              text: 'Earnings report',
                               fontSize: 14,
                               color: Colors.grey,
                             ),
                             onTap: () {
-                              // Navigator.of(context).pushReplacement(MaterialPageRoute(
-                              //     builder: (context) => const HistoryScreen()));
+                              Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const ReportsPage()));
                             },
                           ),
                           ListTile(
@@ -470,7 +474,7 @@ class _DrawerwIDGETState extends State<DrawerwIDGET> {
                                               Navigator.of(context).pushReplacement(
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          MerchantLoginScreen()));
+                                                          const MerchantLoginScreen()));
                                             },
                                             child: const Text(
                                               'Continue',
