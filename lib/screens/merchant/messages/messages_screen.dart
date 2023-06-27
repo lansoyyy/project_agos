@@ -22,7 +22,7 @@ class _MerchantMessagesScreenState extends State<MerchantMessagesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const MerchantDrawerWidget(),
+      drawer: const DrawerwIDGET(),
       appBar: AppbarWidget('MESSAGES'),
       body: Column(
         children: [

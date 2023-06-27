@@ -13,16 +13,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class MerchantDrawerWidget extends StatefulWidget {
+class DrawerwIDGET extends StatefulWidget {
   final GlobalKey? key6;
 
-  const MerchantDrawerWidget({super.key, this.key6});
+  const DrawerwIDGET({super.key, this.key6});
 
   @override
-  State<MerchantDrawerWidget> createState() => _MerchantDrawerWidgetState();
+  State<DrawerwIDGET> createState() => _DrawerwIDGETState();
 }
 
-class _MerchantDrawerWidgetState extends State<MerchantDrawerWidget> {
+class _DrawerwIDGETState extends State<DrawerwIDGET> {
   @override
   void initState() {
     super.initState();

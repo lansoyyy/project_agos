@@ -55,7 +55,7 @@ class _MerchantHomeScreenState extends State<MerchantHomeScreen> {
       length: 3,
       child: Scaffold(
         drawerEnableOpenDragGesture: false,
-        drawer: const MerchantDrawerWidget(),
+        drawer: const DrawerwIDGET(),
         backgroundColor: Colors.white,
         body: hasloaded
             ? SafeArea(

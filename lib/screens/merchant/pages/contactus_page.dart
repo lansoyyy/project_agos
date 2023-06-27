@@ -10,7 +10,7 @@ class MerchantContactusPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const MerchantDrawerWidget(),
+      drawer: const DrawerwIDGET(),
       appBar: AppbarWidget('Contact Us'),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),

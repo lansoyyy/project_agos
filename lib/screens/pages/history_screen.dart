@@ -3,26 +3,13 @@ import 'package:agos/widgets/drawer_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
-import '../../utils/colors.dart';
-import '../../widgets/text_widget.dart';
+import '../../../utils/colors.dart';
+import '../../../widgets/text_widget.dart';
 
 class HistoryScreen extends StatelessWidget {
   const HistoryScreen({super.key});
-
-  // await FirebaseFirestore.instance
-  //   .collection('Users')
-  //   .doc(FirebaseAuth.instance.currentUser!.uid)
-  //   .update({
-  // 'history': FieldValue.arrayUnion([
-  //   {
-  //     'station': origin,
-  //     'destination': destination,
-  //     'distance': distance,
-  //     'fare': fare,
-  //     'date': DateTime.now(),
-  //   }
-  // ]),
 
   @override
   Widget build(BuildContext context) {
@@ -66,13 +53,13 @@ class HistoryScreen extends StatelessWidget {
                         height: 150,
                         decoration: const BoxDecoration(
                           shape: BoxShape.circle,
-                          image: DecorationImage(
-                            image: AssetImage(
-                              'assets/images/station.png',
-                            ),
-                            fit: BoxFit.cover,
-                          ),
                           color: primary,
+                        ),
+                        child: Center(
+                          child: TextBold(
+                              text: newhistory[index]['stationName'][0],
+                              fontSize: 48,
+                              color: Colors.white),
                         ),
                       ),
                       const SizedBox(
@@ -87,15 +74,14 @@ class HistoryScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 TextBold(
-                                  text: 'Name of the Station',
+                                  text: newhistory[index]['stationName'],
                                   fontSize: 18,
                                   color: Colors.black,
                                 ),
                                 SizedBox(
                                   width: 180,
                                   child: TextRegular(
-                                    text:
-                                        'Location of the Station Location of the Station Location of the Station Location of the Station',
+                                    text: newhistory[index]['stationsAddress'],
                                     fontSize: 14,
                                     color: Colors.grey,
                                   ),
@@ -104,7 +90,8 @@ class HistoryScreen extends StatelessWidget {
                                   height: 5,
                                 ),
                                 TextRegular(
-                                  text: 'Paid: ₱12.00',
+                                  text:
+                                      'Paid: ₱${newhistory[index]['fare'].toInt()}.00',
                                   fontSize: 15,
                                   color: primary,
                                 ),
@@ -112,7 +99,8 @@ class HistoryScreen extends StatelessWidget {
                                   height: 5,
                                 ),
                                 TextRegular(
-                                  text: 'Quantity: 1pcs',
+                                  text:
+                                      'Quantity: ${newhistory[index]['qty']}pcs',
                                   fontSize: 15,
                                   color: primary,
                                 ),
@@ -127,7 +115,10 @@ class HistoryScreen extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
                                       TextBold(
-                                        text: 'September 01, 2023',
+                                        text: DateFormat.yMMMd()
+                                            .add_jm()
+                                            .format(newhistory[index]['date']
+                                                .toDate()),
                                         fontSize: 16,
                                         color: primary,
                                       ),
@@ -135,7 +126,16 @@ class HistoryScreen extends StatelessWidget {
                                         width: 30,
                                       ),
                                       IconButton(
-                                        onPressed: () {},
+                                        onPressed: () async {
+                                          await FirebaseFirestore.instance
+                                              .collection('Users')
+                                              .doc(FirebaseAuth
+                                                  .instance.currentUser!.uid)
+                                              .update({
+                                            'history': FieldValue.arrayRemove(
+                                                [newhistory[index]]),
+                                          });
+                                        },
                                         icon: const Icon(
                                           Icons.delete,
                                           color: primary,
