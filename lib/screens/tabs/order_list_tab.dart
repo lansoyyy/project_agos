@@ -89,7 +89,9 @@ class _TodayListState extends State<TodayList> {
 
                   String timeAgo;
 
-                  if (difference.inMinutes < 60) {
+                  if (difference.inSeconds < 60) {
+                    timeAgo = '${difference.inSeconds} seconds ago';
+                  } else if (difference.inMinutes < 60) {
                     timeAgo = '${difference.inMinutes} minutes ago';
                   } else if (difference.inHours < 24) {
                     timeAgo = '${difference.inHours} hours ago';
