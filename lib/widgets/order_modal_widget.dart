@@ -71,6 +71,10 @@ class _OrderModalWidgetState extends State<OrderModalWidget> {
   String myprofile = '';
   int qty = 1;
 
+  late String orderType = 'Refill';
+
+  final List<bool> _isSelected = [true, false];
+
   @override
   Widget build(BuildContext context) {
     return hasLoaded
@@ -287,6 +291,70 @@ class _OrderModalWidgetState extends State<OrderModalWidget> {
                         ],
                       ),
                       const SizedBox(
+                        height: 20,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 20,
+                          right: 20,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            TextRegular(
+                              text: 'Order type:',
+                              fontSize: 16,
+                              color: Colors.black,
+                            ),
+                            const SizedBox(
+                              width: 20,
+                            ),
+                            ToggleButtons(
+                                borderRadius: BorderRadius.circular(5),
+                                splashColor: Colors.grey,
+                                color: Colors.black,
+                                selectedColor: Colors.blue,
+                                onPressed: (int newIndex) {
+                                  setState(() {
+                                    for (int index = 0;
+                                        index < _isSelected.length;
+                                        index++) {
+                                      if (index == newIndex) {
+                                        _isSelected[index] = true;
+                                        if (_isSelected[0] == true) {
+                                          orderType = 'Refill';
+                                        } else {
+                                          orderType = 'Restock';
+                                        }
+                                      } else {
+                                        _isSelected[index] = false;
+                                      }
+                                    }
+                                  });
+                                },
+                                isSelected: _isSelected,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: TextRegular(
+                                      text: 'Refill',
+                                      fontSize: 14,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: TextRegular(
+                                      text: 'Restock',
+                                      fontSize: 14,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ]),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
                         height: 10,
                       ),
                       const Divider(
@@ -342,7 +410,8 @@ class _OrderModalWidgetState extends State<OrderModalWidget> {
                                                     qty,
                                                 type,
                                                 qty,
-                                                myprofile);
+                                                myprofile,
+                                                orderType);
 
                                             showDialog(
                                                 context: context,
