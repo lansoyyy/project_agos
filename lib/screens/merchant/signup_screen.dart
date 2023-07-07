@@ -52,6 +52,8 @@ class _MerchantSignupScreenState extends State<MerchantSignupScreen> {
 
   late String imageURL = '';
 
+  List<bool> isSelected = [true, false];
+
   Future<void> uploadPicture(String inputSource) async {
     final picker = ImagePicker();
     XFile pickedImage;
@@ -218,6 +220,37 @@ class _MerchantSignupScreenState extends State<MerchantSignupScreen> {
                         },
                       ),
                     ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CheckboxListTile(
+                    activeColor: Colors.green,
+                    title: TextRegular(
+                      text: 'Delivery',
+                      fontSize: 14,
+                      color: Colors.white,
+                    ),
+                    value: isSelected[0],
+                    onChanged: (value) {
+                      setState(() {
+                        isSelected[0] = value!;
+                      });
+                    },
+                  ),
+                  CheckboxListTile(
+                    activeColor: Colors.green,
+                    title: TextRegular(
+                      text: 'Pickup',
+                      fontSize: 14,
+                      color: Colors.white,
+                    ),
+                    value: isSelected[1],
+                    onChanged: (value) {
+                      setState(() {
+                        isSelected[1] = value!;
+                      });
+                    },
                   ),
                   const SizedBox(
                     height: 20,
@@ -423,6 +456,13 @@ class _MerchantSignupScreenState extends State<MerchantSignupScreen> {
         businesshoursController.text,
         priceController.text,
         imageURL,
+        isSelected[0] == true && isSelected[1] == true
+            ? ['Delivery', 'Pickup']
+            : isSelected[0] == true
+                ? ['Delivery']
+                : isSelected[1] == true
+                    ? ['Pickup']
+                    : [],
       );
 
       await FirebaseAuth.instance.signInWithEmailAndPassword(
