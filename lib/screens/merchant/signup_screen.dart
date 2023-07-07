@@ -45,6 +45,7 @@ class _MerchantSignupScreenState extends State<MerchantSignupScreen> {
   final confirmpasswordController = TextEditingController();
 
   final priceController = TextEditingController();
+  final gallonpriceController = TextEditingController();
 
   late String fileName = '';
 
@@ -311,8 +312,24 @@ class _MerchantSignupScreenState extends State<MerchantSignupScreen> {
                   TextFieldWidget(
                     icon: Icons.price_change_outlined,
                     inputType: TextInputType.number,
-                    hint: 'Price per Gallon (ex. 12)',
-                    label: 'Price per Gallon (ex. 12)',
+                    hint: 'Refill Price per Gallon (ex. 12)',
+                    label: 'Refill Price per Gallon (ex. 12)',
+                    controller: priceController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your price rate';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  TextFieldWidget(
+                    icon: Icons.price_change_outlined,
+                    inputType: TextInputType.number,
+                    hint: 'Restock per Gallon (ex. 25)',
+                    label: 'Restock per Gallon (ex. 25)',
                     controller: priceController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -449,21 +466,21 @@ class _MerchantSignupScreenState extends State<MerchantSignupScreen> {
           email: emailController.text, password: passwordController.text);
 
       addMerchant(
-        nameController.text,
-        contactnumberController.text,
-        addressController.text,
-        emailController.text,
-        businesshoursController.text,
-        priceController.text,
-        imageURL,
-        isSelected[0] == true && isSelected[1] == true
-            ? ['Delivery', 'Pickup']
-            : isSelected[0] == true
-                ? ['Delivery']
-                : isSelected[1] == true
-                    ? ['Pickup']
-                    : [],
-      );
+          nameController.text,
+          contactnumberController.text,
+          addressController.text,
+          emailController.text,
+          businesshoursController.text,
+          priceController.text,
+          imageURL,
+          isSelected[0] == true && isSelected[1] == true
+              ? ['Delivery', 'Pickup']
+              : isSelected[0] == true
+                  ? ['Delivery']
+                  : isSelected[1] == true
+                      ? ['Pickup']
+                      : [],
+          gallonpriceController.text);
 
       await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: emailController.text, password: passwordController.text);
