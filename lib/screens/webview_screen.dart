@@ -33,6 +33,8 @@ class MapviewScreenState extends State<MapviewScreen> {
       setState(() {
         lat = position.latitude;
         long = position.longitude;
+
+        hasloaded = true;
       });
     }).catchError((error) {
       print('Error getting location: $error');
@@ -190,11 +192,9 @@ class MapviewScreenState extends State<MapviewScreen> {
             ),
           ),
         );
-
-        setState(() {
-          hasloaded = true;
-        });
       }
+
+      setState(() {});
     });
   }
 
