@@ -184,6 +184,7 @@ class RecommendedStationList extends StatelessWidget {
                                             context: context,
                                             builder: (context) {
                                               return OrderModalWidget(
+                                                offers: merchantdata['offer'],
                                                 price: merchantdata['price'],
                                                 myLat: myLat,
                                                 myLong: myLong,

@@ -19,7 +19,8 @@ class OrderModalWidget extends StatefulWidget {
       required this.myLong,
       required this.name,
       required this.price,
-      required this.number});
+      required this.number,
+      required this.offers});
   final String address;
   final String price;
   final String name;
@@ -27,6 +28,7 @@ class OrderModalWidget extends StatefulWidget {
   final double myLat;
   final double myLong;
   final String stationid;
+  final List offers;
 
   @override
   State<OrderModalWidget> createState() => _OrderModalWidgetState();
@@ -71,6 +73,23 @@ class _OrderModalWidgetState extends State<OrderModalWidget> {
 
   bool isGaloon = true;
   bool isContainer = false;
+
+  bool toDeliverySelected = true;
+  bool toPickupSelected = false;
+
+  void _selectToDelivery() {
+    setState(() {
+      toDeliverySelected = true;
+      toPickupSelected = false;
+    });
+  }
+
+  void _selectToPickup() {
+    setState(() {
+      toDeliverySelected = false;
+      toPickupSelected = true;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -361,6 +380,35 @@ class _OrderModalWidgetState extends State<OrderModalWidget> {
                         ],
                       ),
                       const SizedBox(
+                        height: 10,
+                      ),
+                      widget.offers.contains('Delivery')
+                          ? CheckboxListTile(
+                              title: TextRegular(
+                                text: 'To Deliver',
+                                fontSize: 14,
+                                color: Colors.black,
+                              ),
+                              value: toDeliverySelected,
+                              onChanged: (value) {
+                                _selectToDelivery();
+                              },
+                            )
+                          : const SizedBox(),
+                      widget.offers.contains('Pickup')
+                          ? CheckboxListTile(
+                              title: TextRegular(
+                                text: 'To Pickup',
+                                fontSize: 14,
+                                color: Colors.black,
+                              ),
+                              value: toPickupSelected,
+                              onChanged: (value) {
+                                _selectToPickup();
+                              },
+                            )
+                          : const SizedBox(),
+                      const SizedBox(
                         height: 20,
                       ),
                       const SizedBox(
@@ -422,7 +470,10 @@ class _OrderModalWidgetState extends State<OrderModalWidget> {
                                                     : 'Container',
                                                 qty,
                                                 myprofile,
-                                                orderType);
+                                                orderType,
+                                                toDeliverySelected
+                                                    ? 'To Deliver'
+                                                    : 'To Pickup');
 
                                             showDialog(
                                                 context: context,
