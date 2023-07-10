@@ -473,11 +473,10 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                                             onPressed: () async {
                                               await FirebaseAuth.instance
                                                   .signOut();
-                                              Navigator.of(context)
-                                                  .pushReplacement(
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              LoginScreen()));
+                                              Navigator.of(context).pushReplacement(
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const LoginScreen()));
                                             },
                                             child: const Text(
                                               'Continue',

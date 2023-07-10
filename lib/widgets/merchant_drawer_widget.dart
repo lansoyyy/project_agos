@@ -14,6 +14,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../screens/merchant/pages/reports_page.dart';
+import '../screens/merchant/pages/todeliver_page.dart';
 
 class DrawerwIDGET extends StatefulWidget {
   final GlobalKey? key6;
@@ -364,6 +365,23 @@ class _DrawerwIDGETState extends State<DrawerwIDGET> {
                                   MaterialPageRoute(
                                       builder: (context) =>
                                           const MerchantMessagesScreen()));
+                            },
+                          ),
+                          ListTile(
+                            leading: const Icon(
+                              Icons.delivery_dining_outlined,
+                              color: primary,
+                            ),
+                            title: TextRegular(
+                              text: 'To Deliver',
+                              fontSize: 14,
+                              color: Colors.grey,
+                            ),
+                            onTap: () {
+                              Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const ToDeliverPage()));
                             },
                           ),
                           ListTile(

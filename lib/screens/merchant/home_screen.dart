@@ -300,6 +300,7 @@ class _MerchantHomeScreenState extends State<MerchantHomeScreen> {
                                       isLessThan:
                                           '${toBeginningOfSentenceCase(filter)}z')
                                   .where('mode', isEqualTo: 'To Deliver')
+                                  .where('status', isEqualTo: 'Pending')
                                   .snapshots(),
                             ),
                             TodayList(
@@ -316,6 +317,7 @@ class _MerchantHomeScreenState extends State<MerchantHomeScreen> {
                                       isLessThan:
                                           '${toBeginningOfSentenceCase(filter)}z')
                                   .where('mode', isEqualTo: 'To Pickup')
+                                  .where('status', isEqualTo: 'Pending')
                                   .snapshots(),
                             ),
                             TodayList(
