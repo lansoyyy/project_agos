@@ -227,6 +227,9 @@ class MapScreenState extends State<MapScreen> {
                                                   context: context,
                                                   builder: (context) {
                                                     return OrderModalWidget(
+                                                      gallonPrice:
+                                                          widget.merchantdata[
+                                                              'gallonPrice'],
                                                       offers:
                                                           widget.merchantdata[
                                                               'offer'],
@@ -378,6 +381,8 @@ class MapScreenState extends State<MapScreen> {
                                   context: context,
                                   builder: (context) {
                                     return OrderModalWidget(
+                                      gallonPrice:
+                                          widget.merchantdata['gallonPrice'],
                                       offers: widget.merchantdata['offer'],
                                       price: widget.merchantdata['price'],
                                       myLat: lat,

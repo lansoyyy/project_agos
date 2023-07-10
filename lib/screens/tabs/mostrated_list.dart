@@ -183,6 +183,8 @@ class MostRatedStationList extends StatelessWidget {
                                             context: context,
                                             builder: (context) {
                                               return OrderModalWidget(
+                                                gallonPrice:
+                                                    merchantdata['gallonPrice'],
                                                 offers: merchantdata['offer'],
                                                 price: merchantdata['price'],
                                                 myLat: myLat,
@@ -289,6 +291,15 @@ class MostRatedStationList extends StatelessWidget {
                                 ),
                                 TextRegular(
                                   text: '₱${merchantdata['price']}/gallon',
+                                  fontSize: 15,
+                                  color: primary,
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                TextRegular(
+                                  text:
+                                      'Restock - ₱${merchantdata['gallonPrice']}/gallon',
                                   fontSize: 15,
                                   color: primary,
                                 ),

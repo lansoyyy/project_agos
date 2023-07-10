@@ -20,9 +20,11 @@ class OrderModalWidget extends StatefulWidget {
       required this.name,
       required this.price,
       required this.number,
-      required this.offers});
+      required this.offers,
+      required this.gallonPrice});
   final String address;
   final String price;
+  final String gallonPrice;
   final String name;
   final String number;
   final double myLat;
@@ -463,8 +465,13 @@ class _OrderModalWidgetState extends State<OrderModalWidget> {
                                                 widget.myLat,
                                                 widget.myLong,
                                                 widget.stationid,
-                                                double.parse(widget.price) *
-                                                    qty,
+                                                orderType == 'Refill'
+                                                    ? double.parse(
+                                                            widget.price) *
+                                                        qty
+                                                    : double.parse(widget
+                                                            .gallonPrice) *
+                                                        qty,
                                                 isGaloon
                                                     ? 'Gallon'
                                                     : 'Container',
@@ -498,8 +505,16 @@ class _OrderModalWidgetState extends State<OrderModalWidget> {
                                                               myNumber,
                                                           customerLocation:
                                                               myAddress,
-                                                          fare:
-                                                              '${double.parse(widget.price) * qty}'),
+                                                          fare: orderType ==
+                                                                  'Refill'
+                                                              ? (double.parse(widget
+                                                                          .price) *
+                                                                      qty)
+                                                                  .toString()
+                                                              : (double.parse(widget
+                                                                          .gallonPrice) *
+                                                                      qty)
+                                                                  .toString()),
                                                     ),
                                                   );
                                                 });
