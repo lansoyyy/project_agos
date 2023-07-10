@@ -32,9 +32,9 @@ class _MerchantHomeScreenState extends State<MerchantHomeScreen> {
         'location': {'lat': position.latitude, 'long': position.longitude},
       });
       setState(() {
-        hasloaded = true;
         lat = position.latitude;
         long = position.longitude;
+        hasloaded = true;
       });
     }).catchError((error) {
       print('Error getting location: $error');
@@ -52,7 +52,7 @@ class _MerchantHomeScreenState extends State<MerchantHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 4,
       child: Scaffold(
         drawerEnableOpenDragGesture: false,
         drawer: const DrawerwIDGET(),
@@ -253,7 +253,10 @@ class _MerchantHomeScreenState extends State<MerchantHomeScreen> {
                                 text: 'Today',
                               ),
                               Tab(
-                                text: 'All',
+                                text: 'To Deliver',
+                              ),
+                              Tab(
+                                text: 'To Pickup',
                               ),
                               Tab(
                                 text: 'Done',
@@ -296,6 +299,23 @@ class _MerchantHomeScreenState extends State<MerchantHomeScreen> {
                                   .where('username',
                                       isLessThan:
                                           '${toBeginningOfSentenceCase(filter)}z')
+                                  .where('mode', isEqualTo: 'To Deliver')
+                                  .snapshots(),
+                            ),
+                            TodayList(
+                              filter: filter,
+                              query: FirebaseFirestore.instance
+                                  .collection('Orders')
+                                  .where('stationid',
+                                      isEqualTo: FirebaseAuth
+                                          .instance.currentUser!.uid)
+                                  .where('username',
+                                      isGreaterThanOrEqualTo:
+                                          toBeginningOfSentenceCase(filter))
+                                  .where('username',
+                                      isLessThan:
+                                          '${toBeginningOfSentenceCase(filter)}z')
+                                  .where('mode', isEqualTo: 'To Pickup')
                                   .snapshots(),
                             ),
                             TodayList(

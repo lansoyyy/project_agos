@@ -58,7 +58,6 @@ class _TodayListState extends State<TodayList> {
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasError) {
-                print(snapshot.error);
                 return const Center(child: Text('Error'));
               }
               if (snapshot.connectionState == ConnectionState.waiting) {
@@ -136,6 +135,14 @@ class _TodayListState extends State<TodayList> {
                                 fontSize: 14,
                                 color: primary,
                               ),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            TextRegular(
+                              text: '${data.docs[index]['mode']}',
+                              fontSize: 12,
+                              color: primary,
                             ),
                           ],
                         ),
@@ -332,7 +339,17 @@ class _TodayListState extends State<TodayList> {
                                     height: 5,
                                   ),
                                   TextRegular(
-                                    text: 'Size: ${data.docs[index]['size']}',
+                                    text:
+                                        'Order Type: ${data.docs[index]['orderType']}',
+                                    fontSize: 15,
+                                    color: primary,
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  TextRegular(
+                                    text:
+                                        'Gallon Type: ${data.docs[index]['gallonType']}',
                                     fontSize: 15,
                                     color: primary,
                                   ),

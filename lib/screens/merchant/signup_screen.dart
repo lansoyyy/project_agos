@@ -330,7 +330,7 @@ class _MerchantSignupScreenState extends State<MerchantSignupScreen> {
                     inputType: TextInputType.number,
                     hint: 'Restock per Gallon (ex. 25)',
                     label: 'Restock per Gallon (ex. 25)',
-                    controller: priceController,
+                    controller: gallonpriceController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter your price rate';
