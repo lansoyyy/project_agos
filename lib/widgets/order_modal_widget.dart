@@ -69,6 +69,9 @@ class _OrderModalWidgetState extends State<OrderModalWidget> {
 
   final List<bool> _isSelected = [true, false];
 
+  bool isGaloon = true;
+  bool isContainer = false;
+
   @override
   Widget build(BuildContext context) {
     return hasLoaded
@@ -158,31 +161,55 @@ class _OrderModalWidgetState extends State<OrderModalWidget> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Container(
-                            width: 125,
-                            height: 150,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              border: Border.all(
-                                color: Colors.grey,
-                              ),
-                              image: const DecorationImage(
-                                image: AssetImage('assets/images/galloon.png'),
+                          GestureDetector(
+                            onTap: () {
+                              setState(
+                                () {
+                                  isGaloon = true;
+                                  isContainer = false;
+                                },
+                              );
+                            },
+                            child: Container(
+                              width: 125,
+                              height: 150,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                border: Border.all(
+                                  width: isGaloon ? 5 : 2,
+                                  color: isGaloon ? Colors.blue : Colors.grey,
+                                ),
+                                image: const DecorationImage(
+                                  image:
+                                      AssetImage('assets/images/galloon.png'),
+                                ),
                               ),
                             ),
                           ),
-                          Container(
-                            width: 125,
-                            height: 150,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              border: Border.all(
-                                color: Colors.grey,
+                          GestureDetector(
+                            onTap: () {
+                              setState(
+                                () {
+                                  isContainer = true;
+                                  isGaloon = false;
+                                },
+                              );
+                            },
+                            child: Container(
+                              width: 125,
+                              height: 150,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                border: Border.all(
+                                  width: isContainer ? 5 : 2,
+                                  color:
+                                      isContainer ? Colors.blue : Colors.grey,
+                                ),
+                                image: const DecorationImage(
+                                    image: AssetImage(
+                                        'assets/images/container.png'),
+                                    fit: BoxFit.cover),
                               ),
-                              image: const DecorationImage(
-                                  image:
-                                      AssetImage('assets/images/container.png'),
-                                  fit: BoxFit.cover),
                             ),
                           ),
                         ],
@@ -390,7 +417,9 @@ class _OrderModalWidgetState extends State<OrderModalWidget> {
                                                 widget.stationid,
                                                 double.parse(widget.price) *
                                                     qty,
-                                                type,
+                                                isGaloon
+                                                    ? 'Gallon'
+                                                    : 'Container',
                                                 qty,
                                                 myprofile,
                                                 orderType);
