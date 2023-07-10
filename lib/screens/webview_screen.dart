@@ -167,7 +167,7 @@ class MapviewScreenState extends State<MapviewScreen> {
                                       builder: (context) {
                                         return OrderModalWidget(
                                           gallonPrice: doc['gallonPrice'],
-                                          offers: doc['offers'],
+                                          offers: doc['offer'],
                                           price: doc['price'],
                                           myLat: lat,
                                           myLong: long,
