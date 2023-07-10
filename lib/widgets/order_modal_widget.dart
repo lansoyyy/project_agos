@@ -58,12 +58,6 @@ class _OrderModalWidgetState extends State<OrderModalWidget> {
     });
   }
 
-  List types = [
-    'Small',
-    'Medium',
-    'Large',
-  ];
-
   String type = 'Large';
   String myName = '';
   String myNumber = '';
@@ -153,63 +147,52 @@ class _OrderModalWidgetState extends State<OrderModalWidget> {
                       const SizedBox(
                         height: 10,
                       ),
+                      TextRegular(
+                        text: 'Gallon Type',
+                        fontSize: 14,
+                        color: Colors.black,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              TextRegular(
-                                text: '   Size of Gallon',
-                                fontSize: 14,
-                                color: Colors.black,
+                          Container(
+                            width: 125,
+                            height: 150,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              border: Border.all(
+                                color: Colors.grey,
                               ),
-                              const SizedBox(
-                                height: 10,
+                              image: const DecorationImage(
+                                image: AssetImage('assets/images/galloon.png'),
                               ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: primary,
-                                  ),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 20, right: 20),
-                                  child: DropdownButton<String>(
-                                    value: type,
-                                    icon: const Icon(Icons.arrow_drop_down),
-                                    iconSize: 18,
-                                    elevation: 12,
-                                    style: const TextStyle(
-                                        color: Colors.deepPurple),
-                                    underline: const SizedBox(),
-                                    onChanged: (newValue) {
-                                      setState(() {
-                                        type = newValue!;
-                                      });
-                                    },
-                                    items: <String>['Small', 'Medium', 'Large']
-                                        .map<DropdownMenuItem<String>>(
-                                            (String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Padding(
-                                          padding:
-                                              const EdgeInsets.only(right: 30),
-                                          child: TextRegular(
-                                              text: value,
-                                              fontSize: 14,
-                                              color: primary),
-                                        ),
-                                      );
-                                    }).toList(),
-                                  ),
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
+                          Container(
+                            width: 125,
+                            height: 150,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              border: Border.all(
+                                color: Colors.grey,
+                              ),
+                              image: const DecorationImage(
+                                  image:
+                                      AssetImage('assets/images/container.png'),
+                                  fit: BoxFit.cover),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -288,71 +271,70 @@ class _OrderModalWidgetState extends State<OrderModalWidget> {
                               ),
                             ],
                           ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  TextRegular(
+                                    text: '   Order Type',
+                                    fontSize: 14,
+                                    color: Colors.black,
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  ToggleButtons(
+                                      borderRadius: BorderRadius.circular(5),
+                                      splashColor: Colors.grey,
+                                      color: Colors.black,
+                                      selectedColor: Colors.blue,
+                                      onPressed: (int newIndex) {
+                                        setState(() {
+                                          for (int index = 0;
+                                              index < _isSelected.length;
+                                              index++) {
+                                            if (index == newIndex) {
+                                              _isSelected[index] = true;
+                                              if (_isSelected[0] == true) {
+                                                orderType = 'Refill';
+                                              } else {
+                                                orderType = 'Restock';
+                                              }
+                                            } else {
+                                              _isSelected[index] = false;
+                                            }
+                                          }
+                                        });
+                                      },
+                                      isSelected: _isSelected,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: TextRegular(
+                                            text: 'Refill',
+                                            fontSize: 14,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: TextRegular(
+                                            text: 'Restock',
+                                            fontSize: 14,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ]),
+                                ],
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                       const SizedBox(
                         height: 20,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          left: 20,
-                          right: 20,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            TextRegular(
-                              text: 'Order type:',
-                              fontSize: 16,
-                              color: Colors.black,
-                            ),
-                            const SizedBox(
-                              width: 20,
-                            ),
-                            ToggleButtons(
-                                borderRadius: BorderRadius.circular(5),
-                                splashColor: Colors.grey,
-                                color: Colors.black,
-                                selectedColor: Colors.blue,
-                                onPressed: (int newIndex) {
-                                  setState(() {
-                                    for (int index = 0;
-                                        index < _isSelected.length;
-                                        index++) {
-                                      if (index == newIndex) {
-                                        _isSelected[index] = true;
-                                        if (_isSelected[0] == true) {
-                                          orderType = 'Refill';
-                                        } else {
-                                          orderType = 'Restock';
-                                        }
-                                      } else {
-                                        _isSelected[index] = false;
-                                      }
-                                    }
-                                  });
-                                },
-                                isSelected: _isSelected,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: TextRegular(
-                                      text: 'Refill',
-                                      fontSize: 14,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: TextRegular(
-                                      text: 'Restock',
-                                      fontSize: 14,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ]),
-                          ],
-                        ),
                       ),
                       const SizedBox(
                         height: 10,
