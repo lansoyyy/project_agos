@@ -1,3 +1,4 @@
+import 'package:agos/screens/merchant/delivery_map_page.dart';
 import 'package:agos/utils/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -52,6 +53,8 @@ class _ToDeliverPageState extends State<ToDeliverPage> {
   final messageController = TextEditingController();
 
   String filter = '';
+
+  late var newData;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,7 +62,13 @@ class _ToDeliverPageState extends State<ToDeliverPage> {
       appBar: AppBar(
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => DeliveryMapScreen(
+                        orders: newData,
+                        stationName: userName,
+                      )));
+            },
             icon: const Icon(
               Icons.map_outlined,
             ),
@@ -145,6 +154,10 @@ class _ToDeliverPageState extends State<ToDeliverPage> {
                     }
 
                     final data = snapshot.requireData;
+
+                    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                      newData = data.docs;
+                    });
 
                     return Expanded(
                       child: SizedBox(

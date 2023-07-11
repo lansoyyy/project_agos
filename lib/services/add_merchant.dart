@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 Future addMerchant(name, number, address, email, businessHours, price,
-    stationImage, List offers, gallonPrice) async {
+    stationImage, List offers, gallonPrice, deliveryFee) async {
   final docUser = FirebaseFirestore.instance
       .collection('Merchant')
       .doc(FirebaseAuth.instance.currentUser!.uid);
@@ -25,7 +25,8 @@ Future addMerchant(name, number, address, email, businessHours, price,
     'stationImage': stationImage,
     'dateTime': DateTime.now(),
     'offers': offers,
-    'gallonPrice': gallonPrice
+    'gallonPrice': gallonPrice,
+    'deliveryFee': deliveryFee
   };
 
   await docUser.set(json);

@@ -47,6 +47,8 @@ class _MerchantSignupScreenState extends State<MerchantSignupScreen> {
   final priceController = TextEditingController();
   final gallonpriceController = TextEditingController();
 
+  final deliveryFeeController = TextEditingController();
+
   late String fileName = '';
 
   late File imageFile;
@@ -342,6 +344,22 @@ class _MerchantSignupScreenState extends State<MerchantSignupScreen> {
                     height: 20,
                   ),
                   TextFieldWidget(
+                    icon: Icons.price_change_outlined,
+                    inputType: TextInputType.number,
+                    hint: 'Delivery Fee (per Gallon)',
+                    label: 'Delivery Fee (per Gallon)',
+                    controller: deliveryFeeController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your price rate';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  TextFieldWidget(
                     icon: Icons.email,
                     textCapitalization: TextCapitalization.none,
                     hint: 'Email',
@@ -480,7 +498,8 @@ class _MerchantSignupScreenState extends State<MerchantSignupScreen> {
                   : isSelected[1] == true
                       ? ['Pickup']
                       : [],
-          gallonpriceController.text);
+          gallonpriceController.text,
+          deliveryFeeController.text);
 
       await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: emailController.text, password: passwordController.text);
