@@ -250,7 +250,7 @@ class _MerchantHomeScreenState extends State<MerchantHomeScreen> {
                             unselectedLabelColor: Colors.grey,
                             tabs: [
                               Tab(
-                                text: 'Today',
+                                text: 'All',
                               ),
                               Tab(
                                 text: 'To Deliver',
