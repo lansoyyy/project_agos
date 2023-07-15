@@ -141,7 +141,7 @@ class _ReportsPageState extends State<ReportsPage> {
   getTotalFare() async {
     await FirebaseFirestore.instance
         .collection('Orders')
-        .where('driverId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+        .where('stationid', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
         .where('status', isEqualTo: 'Completed')
         .get()
         .then((QuerySnapshot querySnapshot) {
@@ -152,7 +152,7 @@ class _ReportsPageState extends State<ReportsPage> {
           if (dateTime.year == DateTime.now().year &&
               dateTime.month == DateTime.now().month &&
               dateTime.day == DateTime.now().day) {
-            today += double.parse(doc['fare']);
+            today += doc['payment'].toDouble();
           }
 
           if (dateTime.weekday == DateTime.monday) {
@@ -170,7 +170,7 @@ class _ReportsPageState extends State<ReportsPage> {
           } else if (dateTime.weekday == DateTime.sunday) {
             sunday += 1;
           }
-          total += double.parse(doc['fare']);
+          total += doc['payment'].toDouble();
         });
       }
     });
