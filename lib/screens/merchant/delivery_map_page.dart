@@ -44,10 +44,7 @@ class DeliveryMapScreenState extends State<DeliveryMapScreen> {
     });
 
     Timer.periodic(const Duration(seconds: 5), (timer) {
-      for (int i = 0; i < widget.orders.length; i++) {
-        addRoute(widget.orders[i]['location']['lat'],
-            widget.orders[i]['location']['long']);
-      }
+      addRoute(widget.orders, widget.orders);
     });
   }
 
@@ -111,34 +108,85 @@ class DeliveryMapScreenState extends State<DeliveryMapScreen> {
           position: LatLng(widget.orders[i]['location']['lat'],
               widget.orders[i]['location']['long']),
           infoWindow: InfoWindow(
-            title: widget.orders[i]['username'],
-          ),
+              // onTap: () {
+              //   showDialog(
+              //       context: context,
+              //       builder: (context) => AlertDialog(
+              //             title: const Text(
+              //               'Completed Confirmation',
+              //               style: TextStyle(
+              //                   fontFamily: 'QBold',
+              //                   fontWeight: FontWeight.bold),
+              //             ),
+              //             content: const Text(
+              //               'Complete this order?',
+              //               style: TextStyle(fontFamily: 'QRegular'),
+              //             ),
+              //             actions: <Widget>[
+              //               MaterialButton(
+              //                 onPressed: () => Navigator.of(context).pop(true),
+              //                 child: const Text(
+              //                   'Close',
+              //                   style: TextStyle(
+              //                       fontFamily: 'QRegular',
+              //                       fontWeight: FontWeight.bold),
+              //                 ),
+              //               ),
+              //               MaterialButton(
+              //                 onPressed: () async {
+              //                   setState(() {
+
+              //                     markers.removeWhere((marker) =>
+              //                         marker.markerId ==
+              //                         widget.orders[i]['username']);
+              //                     _poly.removeWhere((poly) =>
+              //                         poly.polylineId ==
+              //                         widget.orders[i]['username']);
+              //                   });
+              //                   Navigator.of(context).pop();
+              //                 },
+              //                 child: const Text(
+              //                   'Continue',
+              //                   style: TextStyle(
+              //                       fontFamily: 'QRegular',
+              //                       fontWeight: FontWeight.bold),
+              //                 ),
+              //               ),
+              //             ],
+              //           ));
+              // },
+              title: widget.orders[i]['username'],
+              snippet:
+                  'Qty: ${widget.orders[i]['qty']}, Price: ₱${widget.orders[i]['payment']}'),
         ),
       );
     }
   }
 
-  addRoute(double orderLat, double orderLong) async {
-    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-        kGoogleApiKey,
-        PointLatLng(lat, long),
-        PointLatLng(orderLat, orderLong));
-    if (result.points.isNotEmpty) {
-      polylineCoordinates = result.points
-          .map((point) => LatLng(point.latitude, point.longitude))
-          .toList();
-    }
-    setState(() {
-      _poly.add(Polyline(
-          color: Colors.red,
-          polylineId: const PolylineId('route'),
-          points: polylineCoordinates,
-          width: 4));
-    });
-    mapController!
-        .animateCamera(CameraUpdate.newLatLngZoom(LatLng(lat, long), 18.0));
+  addRoute(List orderLat, List orderLong) async {
+    for (int i = 0; i < widget.orders.length; i++) {
+      PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+          kGoogleApiKey,
+          PointLatLng(lat, long),
+          PointLatLng(widget.orders[i]['location']['lat'],
+              widget.orders[i]['location']['long']));
+      if (result.points.isNotEmpty) {
+        polylineCoordinates = result.points
+            .map((point) => LatLng(point.latitude, point.longitude))
+            .toList();
+      }
+      setState(() {
+        _poly.add(Polyline(
+            color: Colors.red,
+            polylineId: PolylineId(widget.orders[i]['username']),
+            points: polylineCoordinates,
+            width: 4));
+      });
+      mapController!
+          .animateCamera(CameraUpdate.newLatLngZoom(LatLng(lat, long), 18.0));
 
-    // Accommodate the two locations within the
-    // camera view of the map
+      // Accommodate the two locations within the
+      // camera view of the map
+    }
   }
 }

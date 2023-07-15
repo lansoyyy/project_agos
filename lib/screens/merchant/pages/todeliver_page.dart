@@ -54,6 +54,8 @@ class _ToDeliverPageState extends State<ToDeliverPage> {
 
   String filter = '';
 
+  List<String> orderIds = [];
+
   late var newData;
   @override
   Widget build(BuildContext context) {
@@ -99,6 +101,12 @@ class _ToDeliverPageState extends State<ToDeliverPage> {
                           ),
                           MaterialButton(
                             onPressed: () async {
+                              for (int i = 0; i < orderIds.length; i++) {
+                                await FirebaseFirestore.instance
+                                    .collection('Orders')
+                                    .doc(orderIds[i])
+                                    .update({'status': 'Completed'});
+                              }
                               Navigator.of(context).pop();
                             },
                             child: const Text(
@@ -164,8 +172,15 @@ class _ToDeliverPageState extends State<ToDeliverPage> {
                         child: ListView.separated(
                           itemCount: data.docs.length,
                           separatorBuilder: (context, index) {
-                            return const Divider(
-                              color: primary,
+                            WidgetsBinding.instance
+                                .addPostFrameCallback((timeStamp) {
+                              orderIds.add(data.docs[index].id);
+                            });
+                            return const Padding(
+                              padding: EdgeInsets.only(left: 20, right: 20),
+                              child: Divider(
+                                color: primary,
+                              ),
                             );
                           },
                           itemBuilder: (context, index) {
