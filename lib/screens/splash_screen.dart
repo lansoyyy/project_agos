@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:agos/screens/get_started_screen.dart';
 import 'package:agos/screens/home_screen.dart';
 import 'package:agos/screens/merchant/home_screen.dart';
 import 'package:agos/utils/colors.dart';
@@ -7,8 +8,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
-
-import 'auth/login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -62,9 +61,9 @@ class _SplashScreenState extends State<SplashScreen> {
                     ? usertype == 'User'
                         ? const HomeScreen()
                         : const MerchantHomeScreen()
-                    : const LoginScreen();
+                    : const GetStartedScreen();
               } else {
-                return const LoginScreen();
+                return const GetStartedScreen();
               }
             }),
       ));
